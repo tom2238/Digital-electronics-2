@@ -38,6 +38,7 @@ uint8_t  value = 0;
 uint8_t user_symbol_size = 8*3;
 uint8_t lcd_user_symbols[] = {0x00, 0x0A, 0x0E, 0x0E, 0x15, 0x04, 0x0A, 0x11, 0x04, 0x0e, 0x1f, 0x15, 0x1f, 0x0a, 0x11, 0x0a, 0x04, 0x0e, 0x1f, 0x15, 0x1f, 0x0a, 0x15, 0x1b};
 uint8_t progressbar_val = 0;
+int ipris = 12;
 int main(void)
 {
     /* LCD display
@@ -118,8 +119,12 @@ ISR(TIMER1_OVF_vect)
       lcd_gotoxy(0,1);
       lcd_puts("                ");
     }
-
-    lcd_gotoxy(14,0);
+    
+    ipris++;
+    if(ipris>=16)
+    ipris=12;
+    
+    lcd_gotoxy(ipris,0);
     if(value % 2) {
        
       lcd_putc(0x01);
