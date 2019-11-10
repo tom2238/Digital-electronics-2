@@ -11,8 +11,10 @@ USBPORT   = /dev/ttyUSB0
 ## AVR 8-bit toolchain
 # https://www.microchip.com/mplab/avr-support/avr-and-arm-toolchains-c-compilers
 PREFIX = /opt/avr8-gnu-toolchain-linux_x86_64
+#PREFIX = /usr
 
-
+# Avrdude options
+AVRDUDE_AVR_OPTIONS = -v -b 57600
 
 ##
 ## You should not have to change anything below here
