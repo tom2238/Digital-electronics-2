@@ -79,3 +79,15 @@ rand8_asm:
     pop temp                ; Restore values from Stack end return
     pop result
     ret
+
+.global burst_asm
+burst_asm: 
+   ; cpi input,0
+   ; brne burst_end
+    sbi PORTB,5
+
+   ; cbi PORTB,5
+   ; dec input
+   ; jmp burst_asm
+burst_end:
+    ret

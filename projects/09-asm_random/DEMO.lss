@@ -1,0 +1,1226 @@
+
+DEMO.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000030  00800100  000005f0  00000684  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000005f0  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000049  00800130  00800130  000006b4  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000006b4  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000006e4  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000068  00000000  00000000  00000724  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000d34  00000000  00000000  0000078c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000008ec  00000000  00000000  000014c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000536  00000000  00000000  00001dac  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000001b0  00000000  00000000  000022e4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000004fb  00000000  00000000  00002494  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000643  00000000  00000000  0000298f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  00002fd2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 3b 00 	jmp	0x76	; 0x76 <__ctors_end>
+   4:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+   8:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+   c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  10:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  14:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  18:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  1c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  20:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  24:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  28:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  2c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  30:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  34:	0c 94 c5 00 	jmp	0x18a	; 0x18a <__vector_13>
+  38:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  3c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  40:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  44:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  48:	0c 94 e9 00 	jmp	0x1d2	; 0x1d2 <__vector_18>
+  4c:	0c 94 17 01 	jmp	0x22e	; 0x22e <__vector_19>
+  50:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  54:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  58:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  5c:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  60:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  64:	0c 94 58 00 	jmp	0xb0	; 0xb0 <__bad_interrupt>
+  68:	2e 02       	muls	r18, r30
+  6a:	30 02       	muls	r19, r16
+  6c:	32 02       	muls	r19, r18
+  6e:	32 02       	muls	r19, r18
+  70:	34 02       	muls	r19, r20
+  72:	3b 02       	muls	r19, r27
+  74:	42 02       	muls	r20, r18
+
+00000076 <__ctors_end>:
+  76:	11 24       	eor	r1, r1
+  78:	1f be       	out	0x3f, r1	; 63
+  7a:	cf ef       	ldi	r28, 0xFF	; 255
+  7c:	d8 e0       	ldi	r29, 0x08	; 8
+  7e:	de bf       	out	0x3e, r29	; 62
+  80:	cd bf       	out	0x3d, r28	; 61
+
+00000082 <__do_copy_data>:
+  82:	11 e0       	ldi	r17, 0x01	; 1
+  84:	a0 e0       	ldi	r26, 0x00	; 0
+  86:	b1 e0       	ldi	r27, 0x01	; 1
+  88:	e0 ef       	ldi	r30, 0xF0	; 240
+  8a:	f5 e0       	ldi	r31, 0x05	; 5
+  8c:	02 c0       	rjmp	.+4      	; 0x92 <__do_copy_data+0x10>
+  8e:	05 90       	lpm	r0, Z+
+  90:	0d 92       	st	X+, r0
+  92:	a0 33       	cpi	r26, 0x30	; 48
+  94:	b1 07       	cpc	r27, r17
+  96:	d9 f7       	brne	.-10     	; 0x8e <__do_copy_data+0xc>
+
+00000098 <__do_clear_bss>:
+  98:	21 e0       	ldi	r18, 0x01	; 1
+  9a:	a0 e3       	ldi	r26, 0x30	; 48
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	01 c0       	rjmp	.+2      	; 0xa2 <.do_clear_bss_start>
+
+000000a0 <.do_clear_bss_loop>:
+  a0:	1d 92       	st	X+, r1
+
+000000a2 <.do_clear_bss_start>:
+  a2:	a9 37       	cpi	r26, 0x79	; 121
+  a4:	b2 07       	cpc	r27, r18
+  a6:	e1 f7       	brne	.-8      	; 0xa0 <.do_clear_bss_loop>
+  a8:	0e 94 a9 02 	call	0x552	; 0x552 <main>
+  ac:	0c 94 f6 02 	jmp	0x5ec	; 0x5ec <_exit>
+
+000000b0 <__bad_interrupt>:
+  b0:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000b4 <fsm_random>:
+extern uint8_t rand8_asm(uint8_t current);
+
+/* Functions ---------------------------------------------------------*/
+/* Call assembly functions to generate psudo-random values. */
+void fsm_random(void)
+{
+  b4:	cf 93       	push	r28
+  b6:	df 93       	push	r29
+  b8:	00 d0       	rcall	.+0      	; 0xba <fsm_random+0x6>
+  ba:	00 d0       	rcall	.+0      	; 0xbc <fsm_random+0x8>
+  bc:	1f 92       	push	r1
+  be:	cd b7       	in	r28, 0x3d	; 61
+  c0:	de b7       	in	r29, 0x3e	; 62
+    static uint16_t values = 0;
+    static uint8_t last = 0;
+    static uint8_t new = 0;
+    char uart_string[5];
+
+    switch (current_state) {
+  c2:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
+  c6:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <__data_start+0x1>
+  ca:	82 30       	cpi	r24, 0x02	; 2
+  cc:	91 05       	cpc	r25, r1
+  ce:	c1 f1       	breq	.+112    	; 0x140 <fsm_random+0x8c>
+  d0:	18 f4       	brcc	.+6      	; 0xd8 <fsm_random+0x24>
+  d2:	01 97       	sbiw	r24, 0x01	; 1
+  d4:	e9 f0       	breq	.+58     	; 0x110 <fsm_random+0x5c>
+  d6:	4b c0       	rjmp	.+150    	; 0x16e <fsm_random+0xba>
+  d8:	83 30       	cpi	r24, 0x03	; 3
+  da:	91 05       	cpc	r25, r1
+  dc:	b1 f1       	breq	.+108    	; 0x14a <fsm_random+0x96>
+  de:	04 97       	sbiw	r24, 0x04	; 4
+  e0:	09 f0       	breq	.+2      	; 0xe4 <fsm_random+0x30>
+  e2:	45 c0       	rjmp	.+138    	; 0x16e <fsm_random+0xba>
+    } else if (__radix < 2 || __radix > 36) {
+	*__s = 0;
+	return __s;
+    } else {
+	extern char *__itoa_ncheck (int, char *, unsigned char);
+	return __itoa_ncheck (__val, __s, __radix);
+  e4:	80 91 30 01 	lds	r24, 0x0130	; 0x800130 <__data_end>
+  e8:	4a e0       	ldi	r20, 0x0A	; 10
+  ea:	be 01       	movw	r22, r28
+  ec:	6f 5f       	subi	r22, 0xFF	; 255
+  ee:	7f 4f       	sbci	r23, 0xFF	; 255
+  f0:	90 e0       	ldi	r25, 0x00	; 0
+  f2:	0e 94 c1 02 	call	0x582	; 0x582 <__itoa_ncheck>
+        break;
+
+    // Send pseudo-random value to UART
+    case UART_STATE:
+        itoa(new, uart_string, 10);
+        uart_puts(" "); uart_puts(uart_string);
+  f6:	87 e0       	ldi	r24, 0x07	; 7
+  f8:	91 e0       	ldi	r25, 0x01	; 1
+  fa:	0e 94 8d 01 	call	0x31a	; 0x31a <uart_puts>
+  fe:	ce 01       	movw	r24, r28
+ 100:	01 96       	adiw	r24, 0x01	; 1
+ 102:	0e 94 8d 01 	call	0x31a	; 0x31a <uart_puts>
+        last = new;
+ 106:	80 91 30 01 	lds	r24, 0x0130	; 0x800130 <__data_end>
+ 10a:	80 93 31 01 	sts	0x0131, r24	; 0x800131 <last.1829>
+ 10e:	2f c0       	rjmp	.+94     	; 0x16e <fsm_random+0xba>
+    static uint8_t new = 0;
+    char uart_string[5];
+
+    switch (current_state) {
+    case IDLE_STATE:
+        if (values < 20) {
+ 110:	80 91 32 01 	lds	r24, 0x0132	; 0x800132 <values.1828>
+ 114:	90 91 33 01 	lds	r25, 0x0133	; 0x800133 <values.1828+0x1>
+ 118:	84 31       	cpi	r24, 0x14	; 20
+ 11a:	91 05       	cpc	r25, r1
+ 11c:	18 f4       	brcc	.+6      	; 0x124 <fsm_random+0x70>
+            current_state = RAND4_STATE;
+ 11e:	82 e0       	ldi	r24, 0x02	; 2
+ 120:	90 e0       	ldi	r25, 0x00	; 0
+ 122:	27 c0       	rjmp	.+78     	; 0x172 <fsm_random+0xbe>
+        } else if (values < 100) {
+ 124:	84 36       	cpi	r24, 0x64	; 100
+ 126:	91 05       	cpc	r25, r1
+ 128:	40 f5       	brcc	.+80     	; 0x17a <fsm_random+0xc6>
+            if (values == 20) {
+ 12a:	44 97       	sbiw	r24, 0x14	; 20
+ 12c:	31 f4       	brne	.+12     	; 0x13a <fsm_random+0x86>
+                last = 0;
+ 12e:	10 92 31 01 	sts	0x0131, r1	; 0x800131 <last.1829>
+                uart_puts("\r\n\r\n");
+ 132:	82 e0       	ldi	r24, 0x02	; 2
+ 134:	91 e0       	ldi	r25, 0x01	; 1
+ 136:	0e 94 8d 01 	call	0x31a	; 0x31a <uart_puts>
+            }
+            current_state = RAND8_STATE;
+ 13a:	83 e0       	ldi	r24, 0x03	; 3
+ 13c:	90 e0       	ldi	r25, 0x00	; 0
+ 13e:	19 c0       	rjmp	.+50     	; 0x172 <fsm_random+0xbe>
+        }
+        break;
+
+    // Call 4-bit LFSR generator
+    case RAND4_STATE:
+        new = rand4_asm(last);
+ 140:	80 91 31 01 	lds	r24, 0x0131	; 0x800131 <last.1829>
+ 144:	0e 94 86 02 	call	0x50c	; 0x50c <rand4_asm>
+ 148:	04 c0       	rjmp	.+8      	; 0x152 <fsm_random+0x9e>
+        current_state = UART_STATE;
+        break;
+
+    // Call 8-bit LFSR generator
+    case RAND8_STATE:
+        new = rand8_asm(last);
+ 14a:	80 91 31 01 	lds	r24, 0x0131	; 0x800131 <last.1829>
+ 14e:	0e 94 95 02 	call	0x52a	; 0x52a <rand8_asm>
+ 152:	80 93 30 01 	sts	0x0130, r24	; 0x800130 <__data_end>
+        values++;
+ 156:	80 91 32 01 	lds	r24, 0x0132	; 0x800132 <values.1828>
+ 15a:	90 91 33 01 	lds	r25, 0x0133	; 0x800133 <values.1828+0x1>
+ 15e:	01 96       	adiw	r24, 0x01	; 1
+ 160:	90 93 33 01 	sts	0x0133, r25	; 0x800133 <values.1828+0x1>
+ 164:	80 93 32 01 	sts	0x0132, r24	; 0x800132 <values.1828>
+        current_state = UART_STATE;
+ 168:	84 e0       	ldi	r24, 0x04	; 4
+ 16a:	90 e0       	ldi	r25, 0x00	; 0
+ 16c:	02 c0       	rjmp	.+4      	; 0x172 <fsm_random+0xbe>
+        last = new;
+        current_state = IDLE_STATE;
+        break;
+
+    default:
+        current_state = IDLE_STATE;
+ 16e:	81 e0       	ldi	r24, 0x01	; 1
+ 170:	90 e0       	ldi	r25, 0x00	; 0
+ 172:	90 93 01 01 	sts	0x0101, r25	; 0x800101 <__data_start+0x1>
+ 176:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_start>
+    }
+}
+ 17a:	0f 90       	pop	r0
+ 17c:	0f 90       	pop	r0
+ 17e:	0f 90       	pop	r0
+ 180:	0f 90       	pop	r0
+ 182:	0f 90       	pop	r0
+ 184:	df 91       	pop	r29
+ 186:	cf 91       	pop	r28
+ 188:	08 95       	ret
+
+0000018a <__vector_13>:
+
+/* Interrupts --------------------------------------------------------*/
+/* Timer1 overflow interrupt routine.
+ * Update state of the FSM. */
+ISR(TIMER1_OVF_vect)
+{
+ 18a:	1f 92       	push	r1
+ 18c:	0f 92       	push	r0
+ 18e:	0f b6       	in	r0, 0x3f	; 63
+ 190:	0f 92       	push	r0
+ 192:	11 24       	eor	r1, r1
+ 194:	2f 93       	push	r18
+ 196:	3f 93       	push	r19
+ 198:	4f 93       	push	r20
+ 19a:	5f 93       	push	r21
+ 19c:	6f 93       	push	r22
+ 19e:	7f 93       	push	r23
+ 1a0:	8f 93       	push	r24
+ 1a2:	9f 93       	push	r25
+ 1a4:	af 93       	push	r26
+ 1a6:	bf 93       	push	r27
+ 1a8:	ef 93       	push	r30
+ 1aa:	ff 93       	push	r31
+    fsm_random();
+ 1ac:	0e 94 5a 00 	call	0xb4	; 0xb4 <fsm_random>
+ 1b0:	ff 91       	pop	r31
+ 1b2:	ef 91       	pop	r30
+ 1b4:	bf 91       	pop	r27
+ 1b6:	af 91       	pop	r26
+ 1b8:	9f 91       	pop	r25
+ 1ba:	8f 91       	pop	r24
+ 1bc:	7f 91       	pop	r23
+ 1be:	6f 91       	pop	r22
+ 1c0:	5f 91       	pop	r21
+ 1c2:	4f 91       	pop	r20
+ 1c4:	3f 91       	pop	r19
+ 1c6:	2f 91       	pop	r18
+ 1c8:	0f 90       	pop	r0
+ 1ca:	0f be       	out	0x3f, r0	; 63
+ 1cc:	0f 90       	pop	r0
+ 1ce:	1f 90       	pop	r1
+ 1d0:	18 95       	reti
+
+000001d2 <__vector_18>:
+
+/*************************************************************************
+ * Function: UART Receive Complete interrupt
+ * Purpose:  called when the UART has received a character
+ **************************************************************************/
+{
+ 1d2:	1f 92       	push	r1
+ 1d4:	0f 92       	push	r0
+ 1d6:	0f b6       	in	r0, 0x3f	; 63
+ 1d8:	0f 92       	push	r0
+ 1da:	11 24       	eor	r1, r1
+ 1dc:	2f 93       	push	r18
+ 1de:	8f 93       	push	r24
+ 1e0:	9f 93       	push	r25
+ 1e2:	ef 93       	push	r30
+ 1e4:	ff 93       	push	r31
+    unsigned char usr;
+    unsigned char lastRxError = 0;
+
+
+    /* read UART status register and UART data register */
+    usr  = UART0_STATUS;
+ 1e6:	80 91 c0 00 	lds	r24, 0x00C0	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7e00c0>
+    data = UART0_DATA;
+ 1ea:	90 91 c6 00 	lds	r25, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
+
+    /* get FEn (Frame Error) DORn (Data OverRun) UPEn (USART Parity Error) bits */
+    #if defined(FE) && defined(DOR) && defined(UPE)
+    lastRxError = usr & (_BV(FE) | _BV(DOR) | _BV(UPE) );
+    #elif defined(FE0) && defined(DOR0) && defined(UPE0)
+    lastRxError = usr & (_BV(FE0) | _BV(DOR0) | _BV(UPE0) );
+ 1ee:	8c 71       	andi	r24, 0x1C	; 28
+    #elif defined(FE) && defined(DOR)
+    lastRxError = usr & (_BV(FE) | _BV(DOR) );
+    #endif
+
+    /* calculate buffer index */
+    tmphead = ( UART_RxHead + 1) & UART_RX_BUFFER_MASK;
+ 1f0:	e0 91 36 01 	lds	r30, 0x0136	; 0x800136 <UART_RxHead>
+ 1f4:	ef 5f       	subi	r30, 0xFF	; 255
+ 1f6:	ef 71       	andi	r30, 0x1F	; 31
+
+    if (tmphead == UART_RxTail)
+ 1f8:	20 91 35 01 	lds	r18, 0x0135	; 0x800135 <UART_RxTail>
+ 1fc:	e2 17       	cp	r30, r18
+ 1fe:	39 f0       	breq	.+14     	; 0x20e <__vector_18+0x3c>
+        lastRxError = UART_BUFFER_OVERFLOW >> 8;
+    }
+    else
+    {
+        /* store new index */
+        UART_RxHead = tmphead;
+ 200:	e0 93 36 01 	sts	0x0136, r30	; 0x800136 <UART_RxHead>
+        /* store received data in buffer */
+        UART_RxBuf[tmphead] = data;
+ 204:	f0 e0       	ldi	r31, 0x00	; 0
+ 206:	e7 5c       	subi	r30, 0xC7	; 199
+ 208:	fe 4f       	sbci	r31, 0xFE	; 254
+ 20a:	90 83       	st	Z, r25
+ 20c:	01 c0       	rjmp	.+2      	; 0x210 <__vector_18+0x3e>
+    tmphead = ( UART_RxHead + 1) & UART_RX_BUFFER_MASK;
+
+    if (tmphead == UART_RxTail)
+    {
+        /* error: receive buffer overflow */
+        lastRxError = UART_BUFFER_OVERFLOW >> 8;
+ 20e:	82 e0       	ldi	r24, 0x02	; 2
+        /* store new index */
+        UART_RxHead = tmphead;
+        /* store received data in buffer */
+        UART_RxBuf[tmphead] = data;
+    }
+    UART_LastRxError |= lastRxError;
+ 210:	90 91 34 01 	lds	r25, 0x0134	; 0x800134 <UART_LastRxError>
+ 214:	89 2b       	or	r24, r25
+ 216:	80 93 34 01 	sts	0x0134, r24	; 0x800134 <UART_LastRxError>
+}
+ 21a:	ff 91       	pop	r31
+ 21c:	ef 91       	pop	r30
+ 21e:	9f 91       	pop	r25
+ 220:	8f 91       	pop	r24
+ 222:	2f 91       	pop	r18
+ 224:	0f 90       	pop	r0
+ 226:	0f be       	out	0x3f, r0	; 63
+ 228:	0f 90       	pop	r0
+ 22a:	1f 90       	pop	r1
+ 22c:	18 95       	reti
+
+0000022e <__vector_19>:
+
+/*************************************************************************
+ * Function: UART Data Register Empty interrupt
+ * Purpose:  called when the UART is ready to transmit the next byte
+ **************************************************************************/
+{
+ 22e:	1f 92       	push	r1
+ 230:	0f 92       	push	r0
+ 232:	0f b6       	in	r0, 0x3f	; 63
+ 234:	0f 92       	push	r0
+ 236:	11 24       	eor	r1, r1
+ 238:	8f 93       	push	r24
+ 23a:	9f 93       	push	r25
+ 23c:	ef 93       	push	r30
+ 23e:	ff 93       	push	r31
+    unsigned char tmptail;
+
+
+    if (UART_TxHead != UART_TxTail)
+ 240:	90 91 38 01 	lds	r25, 0x0138	; 0x800138 <UART_TxHead>
+ 244:	80 91 37 01 	lds	r24, 0x0137	; 0x800137 <UART_TxTail>
+ 248:	98 17       	cp	r25, r24
+ 24a:	69 f0       	breq	.+26     	; 0x266 <__vector_19+0x38>
+    {
+        /* calculate and store new buffer index */
+        tmptail     = (UART_TxTail + 1) & UART_TX_BUFFER_MASK;
+ 24c:	e0 91 37 01 	lds	r30, 0x0137	; 0x800137 <UART_TxTail>
+ 250:	ef 5f       	subi	r30, 0xFF	; 255
+ 252:	ef 71       	andi	r30, 0x1F	; 31
+        UART_TxTail = tmptail;
+ 254:	e0 93 37 01 	sts	0x0137, r30	; 0x800137 <UART_TxTail>
+        /* get one byte from buffer and write it to UART */
+        UART0_DATA = UART_TxBuf[tmptail]; /* start transmission */
+ 258:	f0 e0       	ldi	r31, 0x00	; 0
+ 25a:	e7 5a       	subi	r30, 0xA7	; 167
+ 25c:	fe 4f       	sbci	r31, 0xFE	; 254
+ 25e:	80 81       	ld	r24, Z
+ 260:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
+ 264:	05 c0       	rjmp	.+10     	; 0x270 <__vector_19+0x42>
+    }
+    else
+    {
+        /* tx buffer empty, disable UDRE interrupt */
+        UART0_CONTROL &= ~_BV(UART0_UDRIE);
+ 266:	80 91 c1 00 	lds	r24, 0x00C1	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
+ 26a:	8f 7d       	andi	r24, 0xDF	; 223
+ 26c:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
+    }
+}
+ 270:	ff 91       	pop	r31
+ 272:	ef 91       	pop	r30
+ 274:	9f 91       	pop	r25
+ 276:	8f 91       	pop	r24
+ 278:	0f 90       	pop	r0
+ 27a:	0f be       	out	0x3f, r0	; 63
+ 27c:	0f 90       	pop	r0
+ 27e:	1f 90       	pop	r1
+ 280:	18 95       	reti
+
+00000282 <uart_init>:
+ * Input:    baudrate using macro UART_BAUD_SELECT()
+ * Returns:  none
+ **************************************************************************/
+void uart_init(unsigned int baudrate)
+{
+    UART_TxHead = 0;
+ 282:	10 92 38 01 	sts	0x0138, r1	; 0x800138 <UART_TxHead>
+    UART_TxTail = 0;
+ 286:	10 92 37 01 	sts	0x0137, r1	; 0x800137 <UART_TxTail>
+    UART_RxHead = 0;
+ 28a:	10 92 36 01 	sts	0x0136, r1	; 0x800136 <UART_RxHead>
+    UART_RxTail = 0;
+ 28e:	10 92 35 01 	sts	0x0135, r1	; 0x800135 <UART_RxTail>
+    #  endif
+    # endif
+    #endif /* ifdef UART_TEST */
+
+    /* Set baud rate */
+    if (baudrate & 0x8000)
+ 292:	97 ff       	sbrs	r25, 7
+ 294:	03 c0       	rjmp	.+6      	; 0x29c <uart_init+0x1a>
+    {
+        #if UART0_BIT_U2X
+        UART0_STATUS = (1 << UART0_BIT_U2X); // Enable 2x speed
+ 296:	22 e0       	ldi	r18, 0x02	; 2
+ 298:	20 93 c0 00 	sts	0x00C0, r18	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7e00c0>
+        #endif
+    }
+    #if defined(UART0_UBRRH)
+    UART0_UBRRH = (unsigned char) ((baudrate >> 8) & 0x80);
+ 29c:	90 78       	andi	r25, 0x80	; 128
+ 29e:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
+    #endif
+    UART0_UBRRL = (unsigned char) (baudrate & 0x00FF);
+ 2a2:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
+
+    /* Enable USART receiver and transmitter and receive complete interrupt */
+    UART0_CONTROL = _BV(UART0_BIT_RXCIE) | (1 << UART0_BIT_RXEN) | (1 << UART0_BIT_TXEN);
+ 2a6:	88 e9       	ldi	r24, 0x98	; 152
+ 2a8:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
+    /* Set frame format: asynchronous, 8data, no parity, 1stop bit */
+    #ifdef UART0_CONTROLC
+    # ifdef UART0_BIT_URSEL
+    UART0_CONTROLC = (1 << UART0_BIT_URSEL) | (1 << UART0_BIT_UCSZ1) | (1 << UART0_BIT_UCSZ0);
+    # else
+    UART0_CONTROLC = (1 << UART0_BIT_UCSZ1) | (1 << UART0_BIT_UCSZ0);
+ 2ac:	86 e0       	ldi	r24, 0x06	; 6
+ 2ae:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
+ 2b2:	08 95       	ret
+
+000002b4 <uart_getc>:
+    unsigned char tmptail;
+    unsigned char data;
+    unsigned char lastRxError;
+
+
+    if (UART_RxHead == UART_RxTail)
+ 2b4:	90 91 36 01 	lds	r25, 0x0136	; 0x800136 <UART_RxHead>
+ 2b8:	80 91 35 01 	lds	r24, 0x0135	; 0x800135 <UART_RxTail>
+ 2bc:	98 17       	cp	r25, r24
+ 2be:	a9 f0       	breq	.+42     	; 0x2ea <uart_getc+0x36>
+    {
+        return UART_NO_DATA; /* no data available */
+    }
+
+    /* calculate buffer index */
+    tmptail = (UART_RxTail + 1) & UART_RX_BUFFER_MASK;
+ 2c0:	90 91 35 01 	lds	r25, 0x0135	; 0x800135 <UART_RxTail>
+ 2c4:	9f 5f       	subi	r25, 0xFF	; 255
+ 2c6:	9f 71       	andi	r25, 0x1F	; 31
+
+    /* get data from receive buffer */
+    data        = UART_RxBuf[tmptail];
+ 2c8:	e9 2f       	mov	r30, r25
+ 2ca:	f0 e0       	ldi	r31, 0x00	; 0
+ 2cc:	e7 5c       	subi	r30, 0xC7	; 199
+ 2ce:	fe 4f       	sbci	r31, 0xFE	; 254
+ 2d0:	20 81       	ld	r18, Z
+    lastRxError = UART_LastRxError;
+ 2d2:	80 91 34 01 	lds	r24, 0x0134	; 0x800134 <UART_LastRxError>
+
+    /* store buffer index */
+    UART_RxTail = tmptail;
+ 2d6:	90 93 35 01 	sts	0x0135, r25	; 0x800135 <UART_RxTail>
+
+    UART_LastRxError = 0;
+ 2da:	10 92 34 01 	sts	0x0134, r1	; 0x800134 <UART_LastRxError>
+    return (lastRxError << 8) + data;
+ 2de:	90 e0       	ldi	r25, 0x00	; 0
+ 2e0:	98 2f       	mov	r25, r24
+ 2e2:	88 27       	eor	r24, r24
+ 2e4:	82 0f       	add	r24, r18
+ 2e6:	91 1d       	adc	r25, r1
+ 2e8:	08 95       	ret
+    unsigned char lastRxError;
+
+
+    if (UART_RxHead == UART_RxTail)
+    {
+        return UART_NO_DATA; /* no data available */
+ 2ea:	80 e0       	ldi	r24, 0x00	; 0
+ 2ec:	91 e0       	ldi	r25, 0x01	; 1
+    /* store buffer index */
+    UART_RxTail = tmptail;
+
+    UART_LastRxError = 0;
+    return (lastRxError << 8) + data;
+}/* uart_getc */
+ 2ee:	08 95       	ret
+
+000002f0 <uart_putc>:
+void uart_putc(unsigned char data)
+{
+    unsigned char tmphead;
+
+
+    tmphead = (UART_TxHead + 1) & UART_TX_BUFFER_MASK;
+ 2f0:	90 91 38 01 	lds	r25, 0x0138	; 0x800138 <UART_TxHead>
+ 2f4:	9f 5f       	subi	r25, 0xFF	; 255
+ 2f6:	9f 71       	andi	r25, 0x1F	; 31
+
+    while (tmphead == UART_TxTail)
+ 2f8:	20 91 37 01 	lds	r18, 0x0137	; 0x800137 <UART_TxTail>
+ 2fc:	92 17       	cp	r25, r18
+ 2fe:	e1 f3       	breq	.-8      	; 0x2f8 <uart_putc+0x8>
+    {
+        ;/* wait for free space in buffer */
+    }
+
+    UART_TxBuf[tmphead] = data;
+ 300:	e9 2f       	mov	r30, r25
+ 302:	f0 e0       	ldi	r31, 0x00	; 0
+ 304:	e7 5a       	subi	r30, 0xA7	; 167
+ 306:	fe 4f       	sbci	r31, 0xFE	; 254
+ 308:	80 83       	st	Z, r24
+    UART_TxHead         = tmphead;
+ 30a:	90 93 38 01 	sts	0x0138, r25	; 0x800138 <UART_TxHead>
+
+    /* enable UDRE interrupt */
+    UART0_CONTROL |= _BV(UART0_UDRIE);
+ 30e:	80 91 c1 00 	lds	r24, 0x00C1	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
+ 312:	80 62       	ori	r24, 0x20	; 32
+ 314:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
+ 318:	08 95       	ret
+
+0000031a <uart_puts>:
+ * Purpose:  transmit string to UART
+ * Input:    string to be transmitted
+ * Returns:  none
+ **************************************************************************/
+void uart_puts(const char *s)
+{
+ 31a:	cf 93       	push	r28
+ 31c:	df 93       	push	r29
+ 31e:	ec 01       	movw	r28, r24
+    while (*s)
+ 320:	89 91       	ld	r24, Y+
+ 322:	88 23       	and	r24, r24
+ 324:	19 f0       	breq	.+6      	; 0x32c <uart_puts+0x12>
+        uart_putc(*s++);
+ 326:	0e 94 78 01 	call	0x2f0	; 0x2f0 <uart_putc>
+ 32a:	fa cf       	rjmp	.-12     	; 0x320 <uart_puts+0x6>
+}/* uart_puts */
+ 32c:	df 91       	pop	r29
+ 32e:	cf 91       	pop	r28
+ 330:	08 95       	ret
+
+00000332 <uart_puts_p>:
+ * Purpose:  transmit string from program memory to UART
+ * Input:    program memory string to be transmitted
+ * Returns:  none
+ **************************************************************************/
+void uart_puts_p(const char *progmem_s)
+{
+ 332:	cf 93       	push	r28
+ 334:	df 93       	push	r29
+ 336:	fc 01       	movw	r30, r24
+    register char c;
+
+    while ( (c = pgm_read_byte(progmem_s++)) )
+ 338:	84 91       	lpm	r24, Z
+ 33a:	ef 01       	movw	r28, r30
+ 33c:	21 96       	adiw	r28, 0x01	; 1
+ 33e:	88 23       	and	r24, r24
+ 340:	21 f0       	breq	.+8      	; 0x34a <uart_puts_p+0x18>
+        uart_putc(c);
+ 342:	0e 94 78 01 	call	0x2f0	; 0x2f0 <uart_putc>
+ 346:	fe 01       	movw	r30, r28
+ 348:	f7 cf       	rjmp	.-18     	; 0x338 <uart_puts_p+0x6>
+}/* uart_puts_p */
+ 34a:	df 91       	pop	r29
+ 34c:	cf 91       	pop	r28
+ 34e:	08 95       	ret
+
+00000350 <TIM_config_prescaler>:
+/* Functions ---------------------------------------------------------*/
+void TIM_config_prescaler(uint8_t timer_name,
+                          uint8_t presc_val)
+{
+    /* Timer/Counter0 */
+    if (timer_name == TIM0) {
+ 350:	81 11       	cpse	r24, r1
+ 352:	31 c0       	rjmp	.+98     	; 0x3b6 <TIM_config_prescaler+0x66>
+        switch (presc_val) {
+ 354:	63 30       	cpi	r22, 0x03	; 3
+ 356:	f9 f0       	breq	.+62     	; 0x396 <TIM_config_prescaler+0x46>
+ 358:	50 f4       	brcc	.+20     	; 0x36e <TIM_config_prescaler+0x1e>
+ 35a:	66 23       	and	r22, r22
+ 35c:	79 f0       	breq	.+30     	; 0x37c <TIM_config_prescaler+0x2c>
+ 35e:	61 30       	cpi	r22, 0x01	; 1
+ 360:	39 f5       	brne	.+78     	; 0x3b0 <TIM_config_prescaler+0x60>
+                TCCR0B = TCCR0B & ~_BV(CS01);
+                TCCR0B = TCCR0B |  _BV(CS00);
+                break;
+            case TIM_PRESC_8:
+                /* 010 */
+                TCCR0B = TCCR0B & ~_BV(CS02);
+ 362:	85 b5       	in	r24, 0x25	; 37
+ 364:	8b 7f       	andi	r24, 0xFB	; 251
+ 366:	85 bd       	out	0x25, r24	; 37
+                TCCR0B = TCCR0B |  _BV(CS01);
+ 368:	85 b5       	in	r24, 0x25	; 37
+ 36a:	82 60       	ori	r24, 0x02	; 2
+ 36c:	0f c0       	rjmp	.+30     	; 0x38c <TIM_config_prescaler+0x3c>
+void TIM_config_prescaler(uint8_t timer_name,
+                          uint8_t presc_val)
+{
+    /* Timer/Counter0 */
+    if (timer_name == TIM0) {
+        switch (presc_val) {
+ 36e:	65 30       	cpi	r22, 0x05	; 5
+ 370:	41 f0       	breq	.+16     	; 0x382 <TIM_config_prescaler+0x32>
+ 372:	66 30       	cpi	r22, 0x06	; 6
+ 374:	e9 f4       	brne	.+58     	; 0x3b0 <TIM_config_prescaler+0x60>
+                TCCR0B = TCCR0B & ~_BV(CS01);
+                TCCR0B = TCCR0B & ~_BV(CS00);
+                break;
+            case TIM_PRESC_1024:
+                /* 101 */
+                TCCR0B = TCCR0B |  _BV(CS02);
+ 376:	85 b5       	in	r24, 0x25	; 37
+ 378:	84 60       	ori	r24, 0x04	; 4
+ 37a:	13 c0       	rjmp	.+38     	; 0x3a2 <TIM_config_prescaler+0x52>
+    /* Timer/Counter0 */
+    if (timer_name == TIM0) {
+        switch (presc_val) {
+            case TIM_PRESC_1:
+                /* 001 */
+                TCCR0B = TCCR0B & ~_BV(CS02);
+ 37c:	85 b5       	in	r24, 0x25	; 37
+ 37e:	8b 7f       	andi	r24, 0xFB	; 251
+ 380:	10 c0       	rjmp	.+32     	; 0x3a2 <TIM_config_prescaler+0x52>
+                TCCR0B = TCCR0B |  _BV(CS01);
+                TCCR0B = TCCR0B |  _BV(CS00);
+                break;
+            case TIM_PRESC_256:
+                /* 100 */
+                TCCR0B = TCCR0B |  _BV(CS02);
+ 382:	85 b5       	in	r24, 0x25	; 37
+ 384:	84 60       	ori	r24, 0x04	; 4
+                TCCR0B = TCCR0B & ~_BV(CS01);
+                TCCR0B = TCCR0B |  _BV(CS00);
+                break;
+            default:
+                /* 000: No clock source (Timer/Counter stopped) */
+                TCCR0B = TCCR0B & ~_BV(CS02);
+ 386:	85 bd       	out	0x25, r24	; 37
+                TCCR0B = TCCR0B & ~_BV(CS01);
+ 388:	85 b5       	in	r24, 0x25	; 37
+ 38a:	8d 7f       	andi	r24, 0xFD	; 253
+                TCCR0B = TCCR0B |  _BV(CS00);
+                break;
+            case TIM_PRESC_8:
+                /* 010 */
+                TCCR0B = TCCR0B & ~_BV(CS02);
+                TCCR0B = TCCR0B |  _BV(CS01);
+ 38c:	85 bd       	out	0x25, r24	; 37
+                TCCR0B = TCCR0B & ~_BV(CS00);
+ 38e:	85 b5       	in	r24, 0x25	; 37
+ 390:	8e 7f       	andi	r24, 0xFE	; 254
+ 392:	85 bd       	out	0x25, r24	; 37
+                break;
+ 394:	08 95       	ret
+            case TIM_PRESC_64:
+                /* 011 */
+                TCCR0B = TCCR0B & ~_BV(CS02);
+ 396:	85 b5       	in	r24, 0x25	; 37
+ 398:	8b 7f       	andi	r24, 0xFB	; 251
+ 39a:	85 bd       	out	0x25, r24	; 37
+                TCCR0B = TCCR0B |  _BV(CS01);
+ 39c:	85 b5       	in	r24, 0x25	; 37
+ 39e:	82 60       	ori	r24, 0x02	; 2
+ 3a0:	03 c0       	rjmp	.+6      	; 0x3a8 <TIM_config_prescaler+0x58>
+                TCCR0B = TCCR0B & ~_BV(CS01);
+                TCCR0B = TCCR0B & ~_BV(CS00);
+                break;
+            case TIM_PRESC_1024:
+                /* 101 */
+                TCCR0B = TCCR0B |  _BV(CS02);
+ 3a2:	85 bd       	out	0x25, r24	; 37
+                TCCR0B = TCCR0B & ~_BV(CS01);
+ 3a4:	85 b5       	in	r24, 0x25	; 37
+ 3a6:	8d 7f       	andi	r24, 0xFD	; 253
+ 3a8:	85 bd       	out	0x25, r24	; 37
+                TCCR0B = TCCR0B |  _BV(CS00);
+ 3aa:	85 b5       	in	r24, 0x25	; 37
+ 3ac:	81 60       	ori	r24, 0x01	; 1
+ 3ae:	f1 cf       	rjmp	.-30     	; 0x392 <TIM_config_prescaler+0x42>
+                break;
+            default:
+                /* 000: No clock source (Timer/Counter stopped) */
+                TCCR0B = TCCR0B & ~_BV(CS02);
+ 3b0:	85 b5       	in	r24, 0x25	; 37
+ 3b2:	8b 7f       	andi	r24, 0xFB	; 251
+ 3b4:	e8 cf       	rjmp	.-48     	; 0x386 <TIM_config_prescaler+0x36>
+                TCCR0B = TCCR0B & ~_BV(CS01);
+                TCCR0B = TCCR0B & ~_BV(CS00);
+        }
+    }
+    /* Timer/Counter1 */
+    else if (timer_name == TIM1) {
+ 3b6:	81 30       	cpi	r24, 0x01	; 1
+ 3b8:	09 f0       	breq	.+2      	; 0x3bc <TIM_config_prescaler+0x6c>
+ 3ba:	44 c0       	rjmp	.+136    	; 0x444 <__LOCK_REGION_LENGTH__+0x44>
+        // TODO: Set prescaler values for Timer/Counter1
+        switch (presc_val) {
+ 3bc:	63 30       	cpi	r22, 0x03	; 3
+ 3be:	d1 f0       	breq	.+52     	; 0x3f4 <TIM_config_prescaler+0xa4>
+ 3c0:	68 f4       	brcc	.+26     	; 0x3dc <TIM_config_prescaler+0x8c>
+ 3c2:	66 23       	and	r22, r22
+ 3c4:	99 f0       	breq	.+38     	; 0x3ec <TIM_config_prescaler+0x9c>
+ 3c6:	61 30       	cpi	r22, 0x01	; 1
+ 3c8:	69 f5       	brne	.+90     	; 0x424 <__LOCK_REGION_LENGTH__+0x24>
+                TCCR1B = TCCR1B & ~_BV(CS11);
+                TCCR1B = TCCR1B |  _BV(CS10);
+                break;
+            case TIM_PRESC_8:
+                /* 010 */
+                TCCR1B = TCCR1B & ~_BV(CS12);
+ 3ca:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 3ce:	8b 7f       	andi	r24, 0xFB	; 251
+ 3d0:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+                TCCR1B = TCCR1B |  _BV(CS11);
+ 3d4:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 3d8:	82 60       	ori	r24, 0x02	; 2
+ 3da:	2c c0       	rjmp	.+88     	; 0x434 <__LOCK_REGION_LENGTH__+0x34>
+        }
+    }
+    /* Timer/Counter1 */
+    else if (timer_name == TIM1) {
+        // TODO: Set prescaler values for Timer/Counter1
+        switch (presc_val) {
+ 3dc:	65 30       	cpi	r22, 0x05	; 5
+ 3de:	99 f0       	breq	.+38     	; 0x406 <__LOCK_REGION_LENGTH__+0x6>
+ 3e0:	66 30       	cpi	r22, 0x06	; 6
+ 3e2:	01 f5       	brne	.+64     	; 0x424 <__LOCK_REGION_LENGTH__+0x24>
+                TCCR1B = TCCR1B & ~_BV(CS11);
+                TCCR1B = TCCR1B & ~_BV(CS10);
+                break;
+            case TIM_PRESC_1024:
+                /* 101 */
+                TCCR1B = TCCR1B |  _BV(CS12);
+ 3e4:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 3e8:	84 60       	ori	r24, 0x04	; 4
+ 3ea:	11 c0       	rjmp	.+34     	; 0x40e <__LOCK_REGION_LENGTH__+0xe>
+    else if (timer_name == TIM1) {
+        // TODO: Set prescaler values for Timer/Counter1
+        switch (presc_val) {
+            case TIM_PRESC_1:
+                /* 001 */
+                TCCR1B = TCCR1B & ~_BV(CS12);
+ 3ec:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 3f0:	8b 7f       	andi	r24, 0xFB	; 251
+ 3f2:	0d c0       	rjmp	.+26     	; 0x40e <__LOCK_REGION_LENGTH__+0xe>
+                TCCR1B = TCCR1B |  _BV(CS11);
+                TCCR1B = TCCR1B & ~_BV(CS10);
+                break;
+            case TIM_PRESC_64:
+                /* 011 */
+                TCCR1B = TCCR1B & ~_BV(CS12);
+ 3f4:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 3f8:	8b 7f       	andi	r24, 0xFB	; 251
+ 3fa:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+                TCCR1B = TCCR1B |  _BV(CS11);
+ 3fe:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 402:	82 60       	ori	r24, 0x02	; 2
+ 404:	09 c0       	rjmp	.+18     	; 0x418 <__LOCK_REGION_LENGTH__+0x18>
+                TCCR1B = TCCR1B |  _BV(CS10);
+                break;
+            case TIM_PRESC_256:
+                /* 100 */
+                TCCR1B = TCCR1B |  _BV(CS12);
+ 406:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 40a:	84 60       	ori	r24, 0x04	; 4
+ 40c:	0e c0       	rjmp	.+28     	; 0x42a <__LOCK_REGION_LENGTH__+0x2a>
+                TCCR1B = TCCR1B & ~_BV(CS11);
+                TCCR1B = TCCR1B & ~_BV(CS10);
+                break;
+            case TIM_PRESC_1024:
+                /* 101 */
+                TCCR1B = TCCR1B |  _BV(CS12);
+ 40e:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+                TCCR1B = TCCR1B & ~_BV(CS11);
+ 412:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 416:	8d 7f       	andi	r24, 0xFD	; 253
+ 418:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+                TCCR1B = TCCR1B |  _BV(CS10);
+ 41c:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 420:	81 60       	ori	r24, 0x01	; 1
+ 422:	0d c0       	rjmp	.+26     	; 0x43e <__LOCK_REGION_LENGTH__+0x3e>
+                break;
+            default:
+                /* 000: No clock source (Timer/Counter stopped) */
+                TCCR1B = TCCR1B & ~_BV(CS12);
+ 424:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 428:	8b 7f       	andi	r24, 0xFB	; 251
+ 42a:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+                TCCR1B = TCCR1B & ~_BV(CS11);
+ 42e:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 432:	8d 7f       	andi	r24, 0xFD	; 253
+ 434:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+                TCCR1B = TCCR1B & ~_BV(CS10);
+ 438:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 43c:	8e 7f       	andi	r24, 0xFE	; 254
+ 43e:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__TEXT_REGION_LENGTH__+0x7e0081>
+ 442:	08 95       	ret
+        }
+    }
+    /* Timer/Counter2 */
+    else {
+        // TODO: Set prescaler values for Timer/Counter2
+        switch (presc_val) {
+ 444:	86 2f       	mov	r24, r22
+ 446:	90 e0       	ldi	r25, 0x00	; 0
+ 448:	87 30       	cpi	r24, 0x07	; 7
+ 44a:	91 05       	cpc	r25, r1
+ 44c:	38 f5       	brcc	.+78     	; 0x49c <__LOCK_REGION_LENGTH__+0x9c>
+ 44e:	fc 01       	movw	r30, r24
+ 450:	ec 5c       	subi	r30, 0xCC	; 204
+ 452:	ff 4f       	sbci	r31, 0xFF	; 255
+                TCCR2B = TCCR2B |  _BV(CS21);
+                TCCR2B = TCCR2B & ~_BV(CS20);
+                break;
+            case TIM_PRESC_1024:
+                /* 111 */
+                TCCR2B = TCCR2B |  _BV(CS22);
+ 454:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+        }
+    }
+    /* Timer/Counter2 */
+    else {
+        // TODO: Set prescaler values for Timer/Counter2
+        switch (presc_val) {
+ 458:	0c 94 bb 02 	jmp	0x576	; 0x576 <__tablejump2__>
+            case TIM_PRESC_1:
+                /* 001 */
+                TCCR2B = TCCR2B & ~_BV(CS22);
+ 45c:	8b 7f       	andi	r24, 0xFB	; 251
+ 45e:	05 c0       	rjmp	.+10     	; 0x46a <__LOCK_REGION_LENGTH__+0x6a>
+                TCCR2B = TCCR2B & ~_BV(CS21);
+                TCCR2B = TCCR2B |  _BV(CS20);
+                break;
+            case TIM_PRESC_8:
+                /* 010 */
+                TCCR2B = TCCR2B & ~_BV(CS22);
+ 460:	8b 7f       	andi	r24, 0xFB	; 251
+ 462:	0a c0       	rjmp	.+20     	; 0x478 <__LOCK_REGION_LENGTH__+0x78>
+                TCCR2B = TCCR2B |  _BV(CS21);
+                TCCR2B = TCCR2B |  _BV(CS20);
+                break;
+            case TIM_PRESC_64:
+                /* 100 */
+                TCCR2B = TCCR2B & ~_BV(CS22);
+ 464:	8b 7f       	andi	r24, 0xFB	; 251
+ 466:	0f c0       	rjmp	.+30     	; 0x486 <__LOCK_REGION_LENGTH__+0x86>
+                TCCR2B = TCCR2B |  _BV(CS21);
+                TCCR2B = TCCR2B |  _BV(CS20);
+                break; 
+            case TIM_PRESC_128:
+                /* 101 */
+                TCCR2B = TCCR2B |  _BV(CS22);
+ 468:	84 60       	ori	r24, 0x04	; 4
+ 46a:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+                TCCR2B = TCCR2B & ~_BV(CS21);
+ 46e:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 472:	8d 7f       	andi	r24, 0xFD	; 253
+ 474:	0d c0       	rjmp	.+26     	; 0x490 <__LOCK_REGION_LENGTH__+0x90>
+                TCCR2B = TCCR2B |  _BV(CS20);
+                break;     
+            case TIM_PRESC_256:
+                /* 110 */
+                TCCR2B = TCCR2B |  _BV(CS22);
+ 476:	84 60       	ori	r24, 0x04	; 4
+ 478:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+                TCCR2B = TCCR2B |  _BV(CS21);
+ 47c:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 480:	82 60       	ori	r24, 0x02	; 2
+ 482:	14 c0       	rjmp	.+40     	; 0x4ac <__LOCK_REGION_LENGTH__+0xac>
+                TCCR2B = TCCR2B & ~_BV(CS20);
+                break;
+            case TIM_PRESC_1024:
+                /* 111 */
+                TCCR2B = TCCR2B |  _BV(CS22);
+ 484:	84 60       	ori	r24, 0x04	; 4
+ 486:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+                TCCR2B = TCCR2B |  _BV(CS21);
+ 48a:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 48e:	82 60       	ori	r24, 0x02	; 2
+ 490:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+                TCCR2B = TCCR2B |  _BV(CS20);
+ 494:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 498:	81 60       	ori	r24, 0x01	; 1
+ 49a:	0d c0       	rjmp	.+26     	; 0x4b6 <__LOCK_REGION_LENGTH__+0xb6>
+                break;
+            default:
+                /* 000: No clock source (Timer/Counter stopped) */
+                TCCR2B = TCCR2B & ~_BV(CS22);
+ 49c:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 4a0:	8b 7f       	andi	r24, 0xFB	; 251
+ 4a2:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+                TCCR2B = TCCR2B & ~_BV(CS21);
+ 4a6:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 4aa:	8d 7f       	andi	r24, 0xFD	; 253
+ 4ac:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+                TCCR2B = TCCR2B & ~_BV(CS20);
+ 4b0:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 4b4:	8e 7f       	andi	r24, 0xFE	; 254
+ 4b6:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <__TEXT_REGION_LENGTH__+0x7e00b1>
+ 4ba:	08 95       	ret
+
+000004bc <TIM_config_interrupt>:
+/*--------------------------------------------------------------------*/
+void TIM_config_interrupt(uint8_t timer_name,
+                          uint8_t interr_mode)
+{
+    /* Timer/Counter0 */
+    if (timer_name == TIM0) {
+ 4bc:	81 11       	cpse	r24, r1
+ 4be:	0c c0       	rjmp	.+24     	; 0x4d8 <TIM_config_interrupt+0x1c>
+        switch (interr_mode) {
+            case TIM_OVERFLOW_ENABLE:
+                TIMSK0 = TIMSK0 | _BV(TOIE0);
+                break;
+            case TIM_OVERFLOW_DISABLE:
+                TIMSK0 = TIMSK0 & ~_BV(TOIE0);
+ 4c0:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <__TEXT_REGION_LENGTH__+0x7e006e>
+void TIM_config_interrupt(uint8_t timer_name,
+                          uint8_t interr_mode)
+{
+    /* Timer/Counter0 */
+    if (timer_name == TIM0) {
+        switch (interr_mode) {
+ 4c4:	66 23       	and	r22, r22
+ 4c6:	21 f0       	breq	.+8      	; 0x4d0 <TIM_config_interrupt+0x14>
+ 4c8:	61 30       	cpi	r22, 0x01	; 1
+ 4ca:	11 f4       	brne	.+4      	; 0x4d0 <TIM_config_interrupt+0x14>
+            case TIM_OVERFLOW_ENABLE:
+                TIMSK0 = TIMSK0 | _BV(TOIE0);
+ 4cc:	81 60       	ori	r24, 0x01	; 1
+ 4ce:	01 c0       	rjmp	.+2      	; 0x4d2 <TIM_config_interrupt+0x16>
+                break;
+            case TIM_OVERFLOW_DISABLE:
+                TIMSK0 = TIMSK0 & ~_BV(TOIE0);
+ 4d0:	8e 7f       	andi	r24, 0xFE	; 254
+ 4d2:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__TEXT_REGION_LENGTH__+0x7e006e>
+                break;
+ 4d6:	08 95       	ret
+                /* Disable overflow interrupt */
+                TIMSK0 = TIMSK0 & ~_BV(TOIE0);
+        }
+    }
+    /* Timer/Counter1 */
+    else if (timer_name == TIM1) {
+ 4d8:	81 30       	cpi	r24, 0x01	; 1
+ 4da:	61 f4       	brne	.+24     	; 0x4f4 <TIM_config_interrupt+0x38>
+        switch (interr_mode) {
+            case TIM_OVERFLOW_ENABLE:
+                TIMSK1 = TIMSK1 | _BV(TOIE1);
+                break;
+            case TIM_OVERFLOW_DISABLE:
+                TIMSK1 = TIMSK1 & ~_BV(TOIE1);
+ 4dc:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
+        }
+    }
+    /* Timer/Counter1 */
+    else if (timer_name == TIM1) {
+        // TODO: Enable/disable interupt for Timer/Counter1
+        switch (interr_mode) {
+ 4e0:	66 23       	and	r22, r22
+ 4e2:	21 f0       	breq	.+8      	; 0x4ec <TIM_config_interrupt+0x30>
+ 4e4:	61 30       	cpi	r22, 0x01	; 1
+ 4e6:	11 f4       	brne	.+4      	; 0x4ec <TIM_config_interrupt+0x30>
+            case TIM_OVERFLOW_ENABLE:
+                TIMSK1 = TIMSK1 | _BV(TOIE1);
+ 4e8:	81 60       	ori	r24, 0x01	; 1
+ 4ea:	01 c0       	rjmp	.+2      	; 0x4ee <TIM_config_interrupt+0x32>
+            case TIM_OVERFLOW_DISABLE:
+                TIMSK1 = TIMSK1 & ~_BV(TOIE1);
+                break;
+            default:
+                /* Disable overflow interrupt */
+                TIMSK1 = TIMSK1 & ~_BV(TOIE1);
+ 4ec:	8e 7f       	andi	r24, 0xFE	; 254
+ 4ee:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <__TEXT_REGION_LENGTH__+0x7e006f>
+ 4f2:	08 95       	ret
+        switch (interr_mode) {
+            case TIM_OVERFLOW_ENABLE:
+                TIMSK2 = TIMSK2 | _BV(TOIE2);
+                break;
+            case TIM_OVERFLOW_DISABLE:
+                TIMSK2 = TIMSK2 & ~_BV(TOIE2);
+ 4f4:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <__TEXT_REGION_LENGTH__+0x7e0070>
+        }
+    }
+    /* Timer/Counter2 */
+    else {
+        // TODO: Enable/disable interupt for Timer/Counter2
+        switch (interr_mode) {
+ 4f8:	66 23       	and	r22, r22
+ 4fa:	21 f0       	breq	.+8      	; 0x504 <TIM_config_interrupt+0x48>
+ 4fc:	61 30       	cpi	r22, 0x01	; 1
+ 4fe:	11 f4       	brne	.+4      	; 0x504 <TIM_config_interrupt+0x48>
+            case TIM_OVERFLOW_ENABLE:
+                TIMSK2 = TIMSK2 | _BV(TOIE2);
+ 500:	81 60       	ori	r24, 0x01	; 1
+ 502:	01 c0       	rjmp	.+2      	; 0x506 <TIM_config_interrupt+0x4a>
+            case TIM_OVERFLOW_DISABLE:
+                TIMSK2 = TIMSK2 & ~_BV(TOIE2);
+                break;
+            default:
+                /* Disable overflow interrupt */
+                TIMSK2 = TIMSK2 & ~_BV(TOIE2);
+ 504:	8e 7f       	andi	r24, 0xFE	; 254
+ 506:	80 93 70 00 	sts	0x0070, r24	; 0x800070 <__TEXT_REGION_LENGTH__+0x7e0070>
+ 50a:	08 95       	ret
+
+0000050c <rand4_asm>:
+ 50c:	0f 93       	push	r16
+ 50e:	1f 93       	push	r17
+ 510:	83 fb       	bst	r24, 3
+ 512:	00 f9       	bld	r16, 0
+ 514:	82 fb       	bst	r24, 2
+ 516:	10 f9       	bld	r17, 0
+ 518:	01 27       	eor	r16, r17
+ 51a:	88 0f       	add	r24, r24
+ 51c:	00 95       	com	r16
+ 51e:	00 fb       	bst	r16, 0
+ 520:	80 f9       	bld	r24, 0
+ 522:	8f 70       	andi	r24, 0x0F	; 15
+ 524:	1f 91       	pop	r17
+ 526:	0f 91       	pop	r16
+ 528:	08 95       	ret
+
+0000052a <rand8_asm>:
+ 52a:	0f 93       	push	r16
+ 52c:	1f 93       	push	r17
+ 52e:	87 fb       	bst	r24, 7
+ 530:	00 f9       	bld	r16, 0
+ 532:	85 fb       	bst	r24, 5
+ 534:	10 f9       	bld	r17, 0
+ 536:	01 27       	eor	r16, r17
+ 538:	84 fb       	bst	r24, 4
+ 53a:	10 f9       	bld	r17, 0
+ 53c:	01 27       	eor	r16, r17
+ 53e:	83 fb       	bst	r24, 3
+ 540:	10 f9       	bld	r17, 0
+ 542:	01 27       	eor	r16, r17
+ 544:	88 0f       	add	r24, r24
+ 546:	00 95       	com	r16
+ 548:	00 fb       	bst	r16, 0
+ 54a:	80 f9       	bld	r24, 0
+ 54c:	1f 91       	pop	r17
+ 54e:	0f 91       	pop	r16
+ 550:	08 95       	ret
+
+00000552 <main>:
+/* Main --------------------------------------------------------------*/
+/* Generate a sequence of LFSR preudo-random values using 4- and 8-bit
+ * structure. */
+int main(void)
+{
+    uart_init(UART_BAUD_SELECT(UART_BAUD_RATE, F_CPU)); // 8N1
+ 552:	87 e6       	ldi	r24, 0x67	; 103
+ 554:	90 e0       	ldi	r25, 0x00	; 0
+ 556:	0e 94 41 01 	call	0x282	; 0x282 <uart_init>
+
+    /* Timer1
+     * TODO: Enable overflow interrupt every 33 msec. */
+    TIM_config_prescaler(TIM1, TIM_PRESC_8);
+ 55a:	61 e0       	ldi	r22, 0x01	; 1
+ 55c:	81 e0       	ldi	r24, 0x01	; 1
+ 55e:	0e 94 a8 01 	call	0x350	; 0x350 <TIM_config_prescaler>
+    TIM_config_interrupt(TIM1, TIM_OVERFLOW_ENABLE);
+ 562:	61 e0       	ldi	r22, 0x01	; 1
+ 564:	81 e0       	ldi	r24, 0x01	; 1
+ 566:	0e 94 5e 02 	call	0x4bc	; 0x4bc <TIM_config_interrupt>
+
+    sei();
+ 56a:	78 94       	sei
+    uart_puts("\r\n---LFSR pseudo-random generator---\r\n");
+ 56c:	89 e0       	ldi	r24, 0x09	; 9
+ 56e:	91 e0       	ldi	r25, 0x01	; 1
+ 570:	0e 94 8d 01 	call	0x31a	; 0x31a <uart_puts>
+ 574:	ff cf       	rjmp	.-2      	; 0x574 <main+0x22>
+
+00000576 <__tablejump2__>:
+ 576:	ee 0f       	add	r30, r30
+ 578:	ff 1f       	adc	r31, r31
+ 57a:	05 90       	lpm	r0, Z+
+ 57c:	f4 91       	lpm	r31, Z
+ 57e:	e0 2d       	mov	r30, r0
+ 580:	09 94       	ijmp
+
+00000582 <__itoa_ncheck>:
+ 582:	bb 27       	eor	r27, r27
+ 584:	4a 30       	cpi	r20, 0x0A	; 10
+ 586:	31 f4       	brne	.+12     	; 0x594 <__itoa_ncheck+0x12>
+ 588:	99 23       	and	r25, r25
+ 58a:	22 f4       	brpl	.+8      	; 0x594 <__itoa_ncheck+0x12>
+ 58c:	bd e2       	ldi	r27, 0x2D	; 45
+ 58e:	90 95       	com	r25
+ 590:	81 95       	neg	r24
+ 592:	9f 4f       	sbci	r25, 0xFF	; 255
+ 594:	0c 94 cd 02 	jmp	0x59a	; 0x59a <__utoa_common>
+
+00000598 <__utoa_ncheck>:
+ 598:	bb 27       	eor	r27, r27
+
+0000059a <__utoa_common>:
+ 59a:	fb 01       	movw	r30, r22
+ 59c:	55 27       	eor	r21, r21
+ 59e:	aa 27       	eor	r26, r26
+ 5a0:	88 0f       	add	r24, r24
+ 5a2:	99 1f       	adc	r25, r25
+ 5a4:	aa 1f       	adc	r26, r26
+ 5a6:	a4 17       	cp	r26, r20
+ 5a8:	10 f0       	brcs	.+4      	; 0x5ae <__utoa_common+0x14>
+ 5aa:	a4 1b       	sub	r26, r20
+ 5ac:	83 95       	inc	r24
+ 5ae:	50 51       	subi	r21, 0x10	; 16
+ 5b0:	b9 f7       	brne	.-18     	; 0x5a0 <__utoa_common+0x6>
+ 5b2:	a0 5d       	subi	r26, 0xD0	; 208
+ 5b4:	aa 33       	cpi	r26, 0x3A	; 58
+ 5b6:	08 f0       	brcs	.+2      	; 0x5ba <__utoa_common+0x20>
+ 5b8:	a9 5d       	subi	r26, 0xD9	; 217
+ 5ba:	a1 93       	st	Z+, r26
+ 5bc:	00 97       	sbiw	r24, 0x00	; 0
+ 5be:	79 f7       	brne	.-34     	; 0x59e <__utoa_common+0x4>
+ 5c0:	b1 11       	cpse	r27, r1
+ 5c2:	b1 93       	st	Z+, r27
+ 5c4:	11 92       	st	Z+, r1
+ 5c6:	cb 01       	movw	r24, r22
+ 5c8:	0c 94 e6 02 	jmp	0x5cc	; 0x5cc <strrev>
+
+000005cc <strrev>:
+ 5cc:	dc 01       	movw	r26, r24
+ 5ce:	fc 01       	movw	r30, r24
+ 5d0:	67 2f       	mov	r22, r23
+ 5d2:	71 91       	ld	r23, Z+
+ 5d4:	77 23       	and	r23, r23
+ 5d6:	e1 f7       	brne	.-8      	; 0x5d0 <strrev+0x4>
+ 5d8:	32 97       	sbiw	r30, 0x02	; 2
+ 5da:	04 c0       	rjmp	.+8      	; 0x5e4 <strrev+0x18>
+ 5dc:	7c 91       	ld	r23, X
+ 5de:	6d 93       	st	X+, r22
+ 5e0:	70 83       	st	Z, r23
+ 5e2:	62 91       	ld	r22, -Z
+ 5e4:	ae 17       	cp	r26, r30
+ 5e6:	bf 07       	cpc	r27, r31
+ 5e8:	c8 f3       	brcs	.-14     	; 0x5dc <strrev+0x10>
+ 5ea:	08 95       	ret
+
+000005ec <_exit>:
+ 5ec:	f8 94       	cli
+
+000005ee <__stop_program>:
+ 5ee:	ff cf       	rjmp	.-2      	; 0x5ee <__stop_program>
