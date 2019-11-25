@@ -23,8 +23,8 @@ AVRDUDE_AVR_OPTIONS = -v
 # Define variables used as names of programs in built-in rules
 export LC_ALL=C
 BINDIR  = $(PREFIX)/bin
-CC      = $(BINDIR)/avr-gcc -fdiagnostics-color=always
-AS      = $(BINDIR)/avr-gcc -fdiagnostics-color=always -x assembler-with-cpp
+CC      = $(BINDIR)/avr-gcc 
+AS      = $(BINDIR)/avr-gcc -x assembler-with-cpp
 OBJDUMP = $(BINDIR)/avr-objdump
 OBJCOPY = $(BINDIR)/avr-objcopy
 SIZE    = $(BINDIR)/avr-size

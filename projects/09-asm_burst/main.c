@@ -104,11 +104,11 @@ int main(void)
     uart_puts("\r\n---LFSR pseudo-random generator---\r\n");
 
     GPIO_config_output(&DDRB, PB4);
-    GPIO_write(&PORTB,PB4,0);
+    /*GPIO_write(&PORTB,PB4,0);
     _delay_ms(10);
     GPIO_write(&PORTB,PB4,1);
     _delay_ms(10);
-    GPIO_write(&PORTB,PB4,0);
+    GPIO_write(&PORTB,PB4,0); */
 
     for (;;) {
     }
@@ -122,5 +122,5 @@ int main(void)
 ISR(TIMER1_OVF_vect)
 {
    // fsm_random();
-   //burst_asm(3);
+   burst_asm(3);
 }

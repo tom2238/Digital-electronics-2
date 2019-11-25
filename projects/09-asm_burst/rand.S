@@ -81,13 +81,9 @@ rand8_asm:
     ret
 
 .global burst_asm
-burst_asm: 
-   ; cpi input,0
-   ; brne burst_end
-    sbi PORTB,5
-
-   ; cbi PORTB,5
-   ; dec input
-   ; jmp burst_asm
-burst_end:
+burst_asm:
+    sbi PORTB,5 ; Set
+    cbi PORTB,5 ; Clear
+    dec input
+    brne burst_asm
     ret
