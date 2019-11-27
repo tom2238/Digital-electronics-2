@@ -1,0 +1,5 @@
+./
+/usr/share/arduino/hardware/arduino/cores/arduino
+../library/inc
+/usr/avr/include/
+
