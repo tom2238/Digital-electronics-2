@@ -27,7 +27,8 @@
 void GPIOInit();
 void UARTInit();
 void TimerInit();
-
+void PWMInit();
+void FrequencyPWM(uint16_t frequency, uint8_t percentage);
 /* Functions */
 
 /**
@@ -37,10 +38,10 @@ void TimerInit();
   */
 
 int main(void) {
-  UARTInit();
   GPIOInit();
+  UARTInit();
   TimerInit();
-
+  PWMInit();
   // Put strings to ringbuffer for transmitting via UART.
   uart_puts("Autodraha pripravena\n");
       
@@ -56,7 +57,10 @@ int main(void) {
       uart_puts("X");
       ANSI_UART_C_NORMAL;
     }
-    _delay_ms(50);
+    PWM_START;
+    _delay_ms(10);
+    PWM_STOP;
+    _delay_ms(10);
   }
 
   return 0;
@@ -87,9 +91,45 @@ void UARTInit() {
 }
 
 void TimerInit() {
-  // Timer 1
+  // Timer 0
   TIM_config_prescaler(TIM0, TIM_PRESC_1);
   TIM_config_interrupt(TIM0, TIM_OVERFLOW_ENABLE);
-
   sei();
+}
+
+void FrequencyPWM(uint16_t frequency, uint8_t percentage) {
+	uint16_t TOP = F_CPU/(PWM_DIVIDER*frequency) - 1;
+	ICR1H = TOP >> 8;
+	ICR1L = TOP & 0xFF;
+  //percentage =  (percentage > 100 ? 100 : (percentage < 0 ? 0 : percentage));
+  uint16_t OCR = (uint16_t)(((uint32_t)percentage * (uint32_t)TOP)/100) ;    // Set pwm percent of pwm period
+	OCR1AH = OCR >> 8;
+	OCR1AL = OCR & 0xFF;
+}
+
+void PWMInit() {
+	DDRB |= (1 << PINB1);
+	//DDRB |= (1 << PINB2);
+	// Timer/Counter 1 initialization
+	// Clock source: System Clock
+	// Clock value: 16 MHz
+	// Mode: Fast PWM top=ICR1
+	// OC1A output: Non-Inverted PWM
+	// OC1B output: Non-Inverted PWM
+	// Noise Canceler: Off
+	// Input Capture on Falling Edge
+	// Timer Period: 1 s
+	// Output Pulse(s):
+	// OC1A Period: 1 s Width: 0.2 s
+	// OC1B Period: 1 s Width: 0.40001 s
+	// Timer1 Overflow Interrupt: Off
+	// Input Capture Interrupt: Off
+	// Compare A Match Interrupt: Off
+	// Compare B Match Interrupt: Off
+	TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (1<<COM1B1) | (0<<COM1B0) | (1<<WGM11) | (0<<WGM10);
+	TCCR1B=(0<<ICNC1) | (0<<ICES1) | (1<<WGM13) | (1<<WGM12) | (0<<CS12) | (0<<CS11) | (1<<CS10);
+	TCNT1H=0x00;
+	TCNT1L=0x00;
+
+  //FrequencyPWM(38000, 50);
 }

@@ -16,8 +16,8 @@
 
 /* Define */
 // Ports
-#define IR_LED_PIN           PB2
-#define IR_SENSOR_PIN        PB1
+#define IR_LED_PIN           PB1
+#define IR_SENSOR_PIN        PB2
 #define USENSOR_ECHO_PIN     PB3
 #define USENSOR_TRIG_PIN     PB4
 // Uart
@@ -34,5 +34,9 @@
 // Values
 #define HIGH                 1
 #define LOW                  0
+#define PWM_DIVIDER          1
+#define PWM_FREQUENCY        38000
+#define PWM_STOP             FrequencyPWM(50, 50)
+#define PWM_START            FrequencyPWM(PWM_FREQUENCY, 50)
 
 #endif /*  MAIN_RACINGCAR_H_INCLUDED  */
