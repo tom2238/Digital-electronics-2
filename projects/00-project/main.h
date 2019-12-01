@@ -36,7 +36,10 @@
 #define LOW                  0
 #define PWM_DIVIDER          1
 #define PWM_FREQUENCY        38000
-#define PWM_STOP             FrequencyPWM(50, 50)
+#define PWM_STOP             FrequencyPWM(PWM_FREQUENCY, 0)
 #define PWM_START            FrequencyPWM(PWM_FREQUENCY, 50)
+#define IR_PULSE_LEN         560/2
+#define IR_PULSE_MARK        3
+#define IR_PULSE_SPACE       1
 
 #endif /*  MAIN_RACINGCAR_H_INCLUDED  */

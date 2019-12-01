@@ -29,6 +29,7 @@ void UARTInit();
 void TimerInit();
 void PWMInit();
 void FrequencyPWM(uint16_t frequency, uint8_t percentage);
+void SendIR();
 /* Functions */
 
 /**
@@ -47,7 +48,7 @@ int main(void) {
       
   /* Infinite loop */
   for (;;) {
-    if(GPIO_read(&PINB,IR_SENSOR_PIN)) {
+    /*if(GPIO_read(&PINB,IR_SENSOR_PIN)) {
       ANSI_UART_C_RED; // vstup 1
       uart_puts("X");
       ANSI_UART_C_NORMAL;
@@ -56,11 +57,9 @@ int main(void) {
       ANSI_UART_C_GREEN; // vstup 0
       uart_puts("X");
       ANSI_UART_C_NORMAL;
-    }
-    PWM_START;
-    _delay_ms(10);
-    PWM_STOP;
-    _delay_ms(10);
+    }*/
+    SendIR();
+    //_delay_ms(100);
   }
 
   return 0;
@@ -94,22 +93,23 @@ void TimerInit() {
   // Timer 0
   TIM_config_prescaler(TIM0, TIM_PRESC_1);
   TIM_config_interrupt(TIM0, TIM_OVERFLOW_ENABLE);
-  sei();
+  sei(); //Enable global interrupts
 }
 
 void FrequencyPWM(uint16_t frequency, uint8_t percentage) {
 	uint16_t TOP = F_CPU/(PWM_DIVIDER*frequency) - 1;
 	ICR1H = TOP >> 8;
 	ICR1L = TOP & 0xFF;
-  //percentage =  (percentage > 100 ? 100 : (percentage < 0 ? 0 : percentage));
-  uint16_t OCR = (uint16_t)(((uint32_t)percentage * (uint32_t)TOP)/100) ;    // Set pwm percent of pwm period
+    if(percentage > 100) {
+      percentage = 100;
+    }
+    uint16_t OCR = (uint16_t)(((uint32_t)percentage * (uint32_t)TOP)/100);
 	OCR1AH = OCR >> 8;
 	OCR1AL = OCR & 0xFF;
 }
 
 void PWMInit() {
 	DDRB |= (1 << PINB1);
-	//DDRB |= (1 << PINB2);
 	// Timer/Counter 1 initialization
 	// Clock source: System Clock
 	// Clock value: 16 MHz
@@ -119,7 +119,7 @@ void PWMInit() {
 	// Noise Canceler: Off
 	// Input Capture on Falling Edge
 	// Timer Period: 1 s
-	// Output Pulse(s):
+    // Output Pulse(s):
 	// OC1A Period: 1 s Width: 0.2 s
 	// OC1B Period: 1 s Width: 0.40001 s
 	// Timer1 Overflow Interrupt: Off
@@ -132,4 +132,23 @@ void PWMInit() {
 	TCNT1L=0x00;
 
   //FrequencyPWM(38000, 50);
+}
+
+// NEC protocol
+void SendIR() {
+  //Send 1
+  uint8_t i;
+  for(i=0;i<8;i++) {
+    PWM_START;
+    _delay_us(IR_PULSE_LEN);
+    PWM_STOP;
+    _delay_us(IR_PULSE_LEN*IR_PULSE_MARK);
+  }
+  //Send 0
+  for(i=0;i<8;i++) {
+    PWM_START;
+    _delay_us(IR_PULSE_LEN);
+    PWM_STOP;
+    _delay_us(IR_PULSE_LEN*IR_PULSE_SPACE);
+  }
 }

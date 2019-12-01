@@ -14,7 +14,12 @@ PREFIX = /opt/avr8-gnu-toolchain-linux_x86_64
 #PREFIX = /usr
 
 # Avrdude options
-AVRDUDE_AVR_OPTIONS = -v 
+HOSTNAME=$(shell hostname)
+ifeq "$(HOSTNAME)" "porteus"
+  AVRDUDE_AVR_OPTIONS = -v -b 57600
+else
+  AVRDUDE_AVR_OPTIONS = -v 
+endif 
 
 ##
 ## You should not have to change anything below here
