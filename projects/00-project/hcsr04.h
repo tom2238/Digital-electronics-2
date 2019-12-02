@@ -11,7 +11,20 @@
 
 #ifndef  HCSR04_H_INCLUDED
 #define  HCSR04_H_INCLUDED
-
+/**
+ * @brief Vyšle echo impulz, senzor HC-SR04
+ * @author Tomáš Dubina
+ * @return nic
+ * @param nic
+ */
 void USensorTrigger();
+
+/**
+ * @author Tomáš Dubina
+ * @brief Prevede pocet pulzů na délku v mm
+ * @param pulses Počet pulzů
+ * @return Vzdálenost od cíle v mm
+ */
+uint16_t UPulsesToMilimeters(uint16_t pulses);
 
 #endif /*  HCSR04_H_INCLUDED  */

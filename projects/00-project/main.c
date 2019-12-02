@@ -20,8 +20,6 @@
 #include "gpio.h"
 #include "hcsr04.h"
 
-
-/* Variables */
 /* Function prototypes */
 
 void GPIOInit();
@@ -33,17 +31,19 @@ void SendIR();
 /* Functions */
 
 /**
-  * Brief:  Main program.
-  * Input:  None
-  * Return: None
-  */
-
+ * @author Milan Horník, Tomáš Dubina
+ * @brief Hlavní program
+ * @param  Nic
+ * @return Návratový kod
+ */
 int main(void) {
   GPIOInit();
   UARTInit();
   TimerInit();
   PWMInit();
-  // Put strings to ringbuffer for transmitting via UART.
+  distance.enable = FALSE;
+  distance.complete = FALSE;
+  distance.pulses = 0;
   uart_puts("Autodraha pripravena\n");
       
   /* Infinite loop */
@@ -59,17 +59,49 @@ int main(void) {
       ANSI_UART_C_NORMAL;
     }*/
     SendIR();
-    //_delay_ms(100);
+    if(distance.complete) {
+        char dist[8];
+        itoa(UPulsesToMilimeters(distance.pulses), dist , 10);
+        uart_puts(dist);
+        uart_puts("||");
+
+    }
+    _delay_ms(10);
+    USensorTrigger();
   }
 
   return 0;
 }
 
+/**
+ * @author Milan Horník
+ * @brief Funkce od vektoru přerušení čítače/časovače 0
+ * @param Nic
+ * @return Nic
+ */
 ISR(TIMER0_OVF_vect) {
-  /* Invert LED and delay */
-  GPIO_toggle(&PORTB,IR_LED_PIN);
+  // Add
+  if(distance.enable) {
+    if(!GPIO_read(&PIND,USENSOR_ECHO_PIN)) {
+      distance.pulses++;
+      if(distance.pulses > 3000) {
+        distance.complete = TRUE;
+        distance.enable = FALSE;
+      }
+    }
+    else {
+      distance.complete = TRUE;
+      distance.enable = FALSE;
+    }
+  }
 }
 
+/**
+ * @author Milan Horník
+ * @brief Inicializace vstupních a výstupních pinů
+ * @param Nic
+ * @return Nic
+ */
 void GPIOInit() {
   /* Set output pins */
   GPIO_config_output(&DDRB,IR_LED_PIN);
@@ -77,18 +109,30 @@ void GPIOInit() {
 
   /* Set input pins */
   GPIO_config_input_pullup(&DDRB,&PORTB,IR_SENSOR_PIN);
-  GPIO_config_input_nopull(&DDRB,&PORTB,USENSOR_ECHO_PIN);
+  GPIO_config_input_pullup(&DDRD,&PORTD,USENSOR_ECHO_PIN);
 
   /* Turn outputs off */
   GPIO_write(&PORTB,IR_LED_PIN,0);
   GPIO_write(&PORTB,USENSOR_TRIG_PIN,0);
 }
 
+/**
+ * @author Milan Horník
+ * @brief Inicializace UART rozhraní
+ * @param Nic
+ * @return Nic
+ */
 void UARTInit() {
   // UART: asynchronous,
   uart_init(UART_BAUD_SELECT(UART_BAUD_RATE, F_CPU));
 }
 
+/**
+ * @author Tomáš Dubina
+ * @brief Inicializace čítače/časovače 0
+ * @param Nic
+ * @return Nic
+ */
 void TimerInit() {
   // Timer 0
   TIM_config_prescaler(TIM0, TIM_PRESC_1);
@@ -96,6 +140,13 @@ void TimerInit() {
   sei(); //Enable global interrupts
 }
 
+/**
+ * @author Tomáš Dubina
+ * @brief Nastaví frekvenci a střídu PWM
+ * @param frequency frekvence PWM v Hz
+ * @param percentage střída v %
+ * @return Nic
+ */
 void FrequencyPWM(uint16_t frequency, uint8_t percentage) {
 	uint16_t TOP = F_CPU/(PWM_DIVIDER*frequency) - 1;
 	ICR1H = TOP >> 8;
@@ -108,6 +159,12 @@ void FrequencyPWM(uint16_t frequency, uint8_t percentage) {
 	OCR1AL = OCR & 0xFF;
 }
 
+/**
+ * @author Tomáš Dubina
+ * @brief Inicializace PWM na čítači/časovači 1
+ * @param Nic
+ * @return Nic
+ */
 void PWMInit() {
 	DDRB |= (1 << PINB1);
 	// Timer/Counter 1 initialization
@@ -135,6 +192,12 @@ void PWMInit() {
 }
 
 // NEC protocol
+/**
+ * @author Tomáš Dubina
+ * @brief Trvale posílá sekvenci 8 nul a 8 jedniček
+ * @param Nic
+ * @return Nic
+ */
 void SendIR() {
   //Send 1
   uint8_t i;

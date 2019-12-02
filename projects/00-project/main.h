@@ -13,13 +13,18 @@
 #define  MAIN_RACINGCAR_H_INCLUDED
 
 /* Typedef */
+typedef struct{
+  uint16_t pulses;
+  uint8_t enable;
+  uint8_t complete;
+} Distance;
 
 /* Define */
 // Ports
-#define IR_LED_PIN           PB1
-#define IR_SENSOR_PIN        PB2
-#define USENSOR_ECHO_PIN     PB3
-#define USENSOR_TRIG_PIN     PB4
+#define IR_LED_PIN           PB1  // Výstupní pin vysílací IR diody
+#define IR_SENSOR_PIN        PB2  // Vstupní pin IR přijímače
+#define USENSOR_ECHO_PIN     PD2  // Vstupní echo pin
+#define USENSOR_TRIG_PIN     PB4  // Výstupní trigger pin
 // Uart
 #define UART_BAUD_RATE       9600
 // Uart colors
@@ -32,14 +37,19 @@
 #define ANSI_UART_C_MAGENTA  uart_puts("\e[35m")
 #define ANSI_UART_C_BLINK    uart_puts("\e[5m")
 // Values
-#define HIGH                 1
-#define LOW                  0
-#define PWM_DIVIDER          1
-#define PWM_FREQUENCY        38000
-#define PWM_STOP             FrequencyPWM(PWM_FREQUENCY, 0)
-#define PWM_START            FrequencyPWM(PWM_FREQUENCY, 50)
-#define IR_PULSE_LEN         560/2
-#define IR_PULSE_MARK        3
-#define IR_PULSE_SPACE       1
+#define HIGH                 1 // Vysoká
+#define LOW                  0 // Nízká
+#define TRUE                 1 // Pravda
+#define FALSE                0 // Nepravda
+#define PWM_DIVIDER          1 // Delička PWM časovače
+#define PWM_FREQUENCY        38000 // Nosný kmitočet IR záření
+#define PWM_STOP             FrequencyPWM(PWM_FREQUENCY, 0)  // Nevýsílá
+#define PWM_START            FrequencyPWM(PWM_FREQUENCY, 50) // Vysílá nosnou, střída 50%
+#define IR_PULSE_LEN         560/2 // Délka impulzu v us
+#define IR_PULSE_MARK        3  // Délka pauzy jedničky (xLEN)
+#define IR_PULSE_SPACE       1  // Délka pauzy nuly (xLEN)
+
+/* Variables */
+Distance distance;
 
 #endif /*  MAIN_RACINGCAR_H_INCLUDED  */
