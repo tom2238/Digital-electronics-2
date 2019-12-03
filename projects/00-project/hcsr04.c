@@ -15,19 +15,24 @@
 #include "gpio.h"
 
 void USensorTrigger() {
-  distance.complete = FALSE;
-  distance.pulses = 0;
-  GPIO_write(&PORTB,USENSOR_TRIG_PIN,LOW);
-  _delay_us(100);
-  GPIO_write(&PORTB,USENSOR_TRIG_PIN,HIGH);
-  _delay_us(10);  // 10 us delay
-  GPIO_write(&PORTB,USENSOR_TRIG_PIN,LOW);
-  distance.enable = TRUE;
+  if(distance.complete) {
+    distance.pulses = 0;
+    GPIO_write(&PORTD,USENSOR_TRIG_PIN,LOW);
+    _delay_us(1);
+    GPIO_write(&PORTD,USENSOR_TRIG_PIN,HIGH);
+    _delay_us(10);  // 10 us delay
+    GPIO_write(&PORTD,USENSOR_TRIG_PIN,LOW);
+    distance.enable = TRUE;
+    distance.complete = FALSE;
+  }
 }
 
 uint16_t UPulsesToMilimeters(uint16_t pulses) {
   double PulsesTime = pulses * 16; // In us
   double SpeedOfSound = 0.03313 + 0.0000606 * 19.307; // In cm/s
   double uDistance = PulsesTime / 2.0 * SpeedOfSound; // In cm
-  return (uint16_t)(uDistance*10); // In mm
+  if(uDistance < 10) {
+    uDistance = 10;
+  }
+  return (uint16_t)(uDistance*10-HCSR04_CALIBRATE); // In mm
 }

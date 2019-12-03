@@ -13,18 +13,25 @@
 #define  MAIN_RACINGCAR_H_INCLUDED
 
 /* Typedef */
+/**
+ * @author Tomáš Dubina
+ * @brief Struktura pro čítač impulzů
+ * @param pulses Počet načítaných impulzů
+ * @param enable Povolit počítání impulzů
+ * @param complete Počítání impulzů dokončeno
+ */
 typedef struct{
-  uint16_t pulses;
+  unsigned int pulses;
   uint8_t enable;
   uint8_t complete;
-} Distance;
+} CountPulse;
 
 /* Define */
 // Ports
 #define IR_LED_PIN           PB1  // Výstupní pin vysílací IR diody
 #define IR_SENSOR_PIN        PB2  // Vstupní pin IR přijímače
 #define USENSOR_ECHO_PIN     PD2  // Vstupní echo pin
-#define USENSOR_TRIG_PIN     PB4  // Výstupní trigger pin
+#define USENSOR_TRIG_PIN     PD3  // Výstupní trigger pin
 // Uart
 #define UART_BAUD_RATE       9600
 // Uart colors
@@ -50,6 +57,6 @@ typedef struct{
 #define IR_PULSE_SPACE       1  // Délka pauzy nuly (xLEN)
 
 /* Variables */
-Distance distance;
+CountPulse distance;
 
 #endif /*  MAIN_RACINGCAR_H_INCLUDED  */

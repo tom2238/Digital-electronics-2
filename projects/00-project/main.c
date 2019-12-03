@@ -42,15 +42,16 @@ int main(void) {
   TimerInit();
   PWMInit();
   distance.enable = FALSE;
-  distance.complete = FALSE;
+  distance.complete = TRUE;
   distance.pulses = 0;
+  _delay_ms(500);
   uart_puts("Autodraha pripravena\n");
-      
+
   /* Infinite loop */
   for (;;) {
     /*if(GPIO_read(&PINB,IR_SENSOR_PIN)) {
       ANSI_UART_C_RED; // vstup 1
-      uart_puts("X");
+      uart_puts("X");FALSE
       ANSI_UART_C_NORMAL;
     }
     else {
@@ -59,15 +60,21 @@ int main(void) {
       ANSI_UART_C_NORMAL;
     }*/
     SendIR();
-    if(distance.complete) {
+    /*if(distance.complete) {
         char dist[8];
         itoa(UPulsesToMilimeters(distance.pulses), dist , 10);
         uart_puts(dist);
         uart_puts("||");
 
-    }
-    _delay_ms(10);
+    }*/
+
+
+    /*char dist[8];
+    itoa(distance.pulses, dist , 10);
+    uart_puts(dist);
+    uart_puts("||");*/
     USensorTrigger();
+    _delay_ms(40);
   }
 
   return 0;
@@ -75,23 +82,39 @@ int main(void) {
 
 /**
  * @author Milan Horník
- * @brief Funkce od vektoru přerušení čítače/časovače 0
+ * @brief Počítá impulzy pokud HC-SR04 vyšle echo
  * @param Nic
  * @return Nic
  */
 ISR(TIMER0_OVF_vect) {
   // Add
   if(distance.enable) {
-    if(!GPIO_read(&PIND,USENSOR_ECHO_PIN)) {
-      distance.pulses++;
-      if(distance.pulses > 3000) {
-        distance.complete = TRUE;
-        distance.enable = FALSE;
-      }
-    }
-    else {
-      distance.complete = TRUE;
+    distance.pulses++;
+  }
+}
+
+/**
+ * @author Tomáš Dubina
+ * @brief Přerušení pokud dojde ke změně hodnoty na echo pinu PD2
+ * @param Nic
+ * @return NicFunkce od vektoru přerušení čítače/časovače 0
+ */
+ISR(PCINT2_vect) {
+  if(distance.enable) {
+    uart_puts("Zmena|");
+    if(distance.pulses > 30) {
       distance.enable = FALSE;
+      if(distance.pulses > 700) {
+        distance.pulses = 700;
+      }
+      char dist[8];
+      itoa(distance.pulses, dist, 10);
+      uart_puts(dist);
+      uart_puts("p|");
+      itoa(UPulsesToMilimeters(distance.pulses), dist , 10);
+      uart_puts(dist);
+      uart_puts(" mm \n");
+      distance.complete = TRUE;
     }
   }
 }
@@ -105,7 +128,7 @@ ISR(TIMER0_OVF_vect) {
 void GPIOInit() {
   /* Set output pins */
   GPIO_config_output(&DDRB,IR_LED_PIN);
-  GPIO_config_output(&DDRB,USENSOR_TRIG_PIN);
+  GPIO_config_output(&DDRD,USENSOR_TRIG_PIN);
 
   /* Set input pins */
   GPIO_config_input_pullup(&DDRB,&PORTB,IR_SENSOR_PIN);
@@ -113,7 +136,7 @@ void GPIOInit() {
 
   /* Turn outputs off */
   GPIO_write(&PORTB,IR_LED_PIN,0);
-  GPIO_write(&PORTB,USENSOR_TRIG_PIN,0);
+  GPIO_write(&PORTD,USENSOR_TRIG_PIN,0);
 }
 
 /**
@@ -137,6 +160,9 @@ void TimerInit() {
   // Timer 0
   TIM_config_prescaler(TIM0, TIM_PRESC_1);
   TIM_config_interrupt(TIM0, TIM_OVERFLOW_ENABLE);
+  // Pin change interrups
+  PCICR |= _BV(PCIE2);
+  PCMSK2 |= _BV(PCINT18);
   sei(); //Enable global interrupts
 }
 
@@ -187,8 +213,6 @@ void PWMInit() {
 	TCCR1B=(0<<ICNC1) | (0<<ICES1) | (1<<WGM13) | (1<<WGM12) | (0<<CS12) | (0<<CS11) | (1<<CS10);
 	TCNT1H=0x00;
 	TCNT1L=0x00;
-
-  //FrequencyPWM(38000, 50);
 }
 
 // NEC protocol
