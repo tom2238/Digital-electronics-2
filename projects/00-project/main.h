@@ -32,6 +32,7 @@ typedef struct{
 #define IR_SENSOR_PIN        PB2  // Vstupní pin IR přijímače
 #define USENSOR_ECHO_PIN     PD2  // Vstupní echo pin
 #define USENSOR_TRIG_PIN     PD3  // Výstupní trigger pin
+#define USENSOR_ECHO_PIN_2   PD4  // Vstupní echo pin 2
 // Uart
 #define UART_BAUD_RATE       9600
 // Uart colors
@@ -52,11 +53,12 @@ typedef struct{
 #define PWM_FREQUENCY        38000 // Nosný kmitočet IR záření
 #define PWM_STOP             FrequencyPWM(PWM_FREQUENCY, 0)  // Nevýsílá
 #define PWM_START            FrequencyPWM(PWM_FREQUENCY, 50) // Vysílá nosnou, střída 50%
-#define IR_PULSE_LEN         560/2 // Délka impulzu v us
+#define IR_PULSE_LEN         500/2 // Délka impulzu v us
 #define IR_PULSE_MARK        3  // Délka pauzy jedničky (xLEN)
 #define IR_PULSE_SPACE       1  // Délka pauzy nuly (xLEN)
 
 /* Variables */
-CountPulse distance;
+CountPulse distance,distance2;
+CountPulse irdetect; 
 
 #endif /*  MAIN_RACINGCAR_H_INCLUDED  */

@@ -21,6 +21,8 @@
 #include "hcsr04.h"
 #include "nokia5110.h"
 
+#define UART_DEBUG
+
 /* Function prototypes */
 
 void GPIOInit();
@@ -29,6 +31,10 @@ void TimerInit();
 void PWMInit();
 void FrequencyPWM(uint16_t frequency, uint8_t percentage);
 void SendIR();
+CountPulse PrintCars(CountPulse car, uint8_t offset);
+
+volatile  uint8_t EchoPinOld  = 0xFF; 
+
 /* Functions */
 
 /**
@@ -39,19 +45,26 @@ void SendIR();
  */
 int main(void) {
   GPIOInit();
-  UARTInit();
+  #ifdef UART_DEBUG
+    UARTInit();
+  #endif
   TimerInit();
   PWMInit();
   nokia_lcd_init();                               
   nokia_lcd_clear();
+  irdetect.pulses = 0;
+  irdetect.complete = FALSE;
   distance.enable = FALSE;
   distance.complete = TRUE;
   distance.pulses = 0;
+  distance2.enable = FALSE;
+  distance2.complete = TRUE;
+  distance2.pulses = 0;
   nokia_lcd_write_string("IT'S WORKING!",1);
   nokia_lcd_set_cursor(0, 10);
   nokia_lcd_render();
   _delay_ms(500);
-  uart_puts("Autodraha pripravena\n");
+  //uart_puts("Autodraha pripravena\n");
 
   /* Infinite loop */
   for (;;) {
@@ -66,21 +79,16 @@ int main(void) {
       ANSI_UART_C_NORMAL;
     }*/
     SendIR();
-    /*if(distance.complete) {
-        char dist[8];
-        itoa(UPulsesToMilimeters(distance.pulses), dist , 10);
-        uart_puts(dist);
-        uart_puts("||");
-
-    }*/
-
 
     /*char dist[8];
     itoa(distance.pulses, dist , 10);
     uart_puts(dist);
     uart_puts("||");*/
-    USensorTrigger();
-    _delay_ms(100);
+    
+    USensorTrigger(1);
+    _delay_ms(70);
+    USensorTrigger(0);
+    _delay_ms(70);
   }
 
   return 0;
@@ -96,6 +104,15 @@ ISR(TIMER0_OVF_vect) {
   // Add
   if(distance.enable) {
     distance.pulses++;
+    if(distance.pulses > 700) {
+      distance.pulses = 700;
+    }
+  }
+  if(distance2.enable) {
+    distance2.pulses++;
+    if(distance2.pulses > 700) {
+      distance2.pulses = 700;
+    }
   }
 }
 
@@ -103,54 +120,44 @@ ISR(TIMER0_OVF_vect) {
  * @author Tomáš Dubina
  * @brief Přerušení pokud dojde ke změně hodnoty na echo pinu PD2
  * @param Nic
- * @return NicFunkce od vektoru přerušení čítače/časovače 0
+ * @return Nic
  */
 ISR(PCINT2_vect) {
-  if(distance.enable) {
-    uart_puts("Zmena|");
-    if(distance.pulses > 30) {
-      distance.enable = FALSE;
-      if(distance.pulses > 700) {
-        distance.pulses = 700;
+  uint8_t EchoChanged;
+  EchoChanged = PIND ^ EchoPinOld;
+  EchoPinOld = PIND;
+  if(distance.enable) {  
+    if(EchoChanged & (1 << USENSOR_ECHO_PIN))  {
+      #ifdef UART_DEBUG
+      uart_puts("Zmena1|");
+      #endif
+      if(distance.pulses > 30) {
+         distance.enable = FALSE;
+         if(distance.pulses > 700) {
+            distance.pulses = 700;
+         }
+         distance = PrintCars(distance, 0);
+         distance.complete = TRUE;
       }
-
-
-      char dist[8];
-      itoa(distance.pulses, dist, 10);
-      uart_puts(dist);
-      uart_puts("p|");
-      nokia_lcd_set_cursor(0,8);
-      nokia_lcd_write_string(dist,1);
-      uint16_t milimeters = UPulsesToMilimeters(distance.pulses);
-      nokia_lcd_write_string(" pulse    ",1);
-      itoa(milimeters, dist , 10);
-      uart_puts(dist);
-      uart_puts(" mm \n");
-      nokia_lcd_set_cursor(0,0);
-      nokia_lcd_write_string(dist,1);
-      nokia_lcd_write_string(" mm       ",1);    
-      if ((milimeters>30)&&(milimeters<100)) 
-        {
-        nokia_lcd_set_cursor(0,16);
-        nokia_lcd_write_string(">auto 1    ",1);
-
-        }
-      else if ((milimeters>110)&&(milimeters<200))
-        {
-        nokia_lcd_set_cursor(0,16);
-        nokia_lcd_write_string(">auto 2    ",1);
-        }
-      else
-        {
-        nokia_lcd_set_cursor(0,16);
-        nokia_lcd_write_string(">?????    ",1);
-        }
-      nokia_lcd_render();
-      distance.complete = TRUE;
-
     }
   }
+  if(distance2.enable) {
+    if(EchoChanged & (1 << USENSOR_ECHO_PIN_2))  {
+      #ifdef UART_DEBUG
+      uart_puts("Zmena2|");
+      #endif
+      if(distance2.pulses > 30) {
+         distance2.enable = FALSE;
+         if(distance2.pulses > 700) {
+            distance2.pulses = 700;
+         }
+         distance2 = PrintCars(distance2, 24);
+         distance2.complete = TRUE;
+      }    
+    } 
+  }
 }
+
 
 /**
  * @author Milan Horník
@@ -166,6 +173,7 @@ void GPIOInit() {
   /* Set input pins */
   GPIO_config_input_pullup(&DDRB,&PORTB,IR_SENSOR_PIN);
   GPIO_config_input_pullup(&DDRD,&PORTD,USENSOR_ECHO_PIN);
+  GPIO_config_input_pullup(&DDRD,&PORTD,USENSOR_ECHO_PIN_2);
 
   /* Turn outputs off */
   GPIO_write(&PORTB,IR_LED_PIN,0);
@@ -180,7 +188,9 @@ void GPIOInit() {
  */
 void UARTInit() {
   // UART: asynchronous,
+  #ifdef UART_DEBUG
   uart_init(UART_BAUD_SELECT(UART_BAUD_RATE, F_CPU));
+  #endif
 }
 
 /**
@@ -193,9 +203,10 @@ void TimerInit() {
   // Timer 0
   TIM_config_prescaler(TIM0, TIM_PRESC_1);
   TIM_config_interrupt(TIM0, TIM_OVERFLOW_ENABLE);
-  // Pin change interrups
+  // Pin change interrups HC-SR04 echo pin
   PCICR |= _BV(PCIE2);
-  PCMSK2 |= _BV(PCINT18);
+  PCMSK2 |= _BV(PCINT18); // echo 1
+  PCMSK2 |= _BV(PCINT20); // echo 2
   sei(); //Enable global interrupts
 }
 
@@ -258,12 +269,12 @@ void PWMInit() {
 void SendIR() {
   //Send 1
   uint8_t i;
-  for(i=0;i<8;i++) {
+  /*for(i=0;i<8;i++) {
     PWM_START;
     _delay_us(IR_PULSE_LEN);
     PWM_STOP;
     _delay_us(IR_PULSE_LEN*IR_PULSE_MARK);
-  }
+  }*/
   //Send 0
   for(i=0;i<8;i++) {
     PWM_START;
@@ -271,4 +282,33 @@ void SendIR() {
     PWM_STOP;
     _delay_us(IR_PULSE_LEN*IR_PULSE_SPACE);
   }
+}
+
+/**
+  * 
+  */
+CountPulse PrintCars(CountPulse car1, uint8_t offset) {
+  CountPulse car = car1;
+  char dist[8];
+  uint16_t milimeters = UPulsesToMilimeters(car.pulses);
+  itoa(milimeters, dist , 10);
+  #ifdef UART_DEBUG
+  uart_puts(dist);
+  uart_puts(" mm \n");
+  #endif
+  nokia_lcd_set_cursor(0,0+offset);
+  nokia_lcd_write_string(dist,1);
+  nokia_lcd_write_string(" mm       ",1);    
+  if ((milimeters>20)&&(milimeters<75)) {
+    nokia_lcd_set_cursor(0,8+offset);
+    nokia_lcd_write_string(">Obsazeno  ",1);
+  }
+  else {
+    nokia_lcd_set_cursor(0,8+offset);
+    nokia_lcd_write_string(">Volno     ",1);
+  }
+  nokia_lcd_render();
+      
+    
+  return car;
 }

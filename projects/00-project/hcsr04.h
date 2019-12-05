@@ -11,14 +11,14 @@
 
 #ifndef  HCSR04_H_INCLUDED
 #define  HCSR04_H_INCLUDED
-#define  HCSR04_CALIBRATE 70 // in mm
+#define  HCSR04_CALIBRATE 70 // in mm 70
 /**
  * @brief Vyšle echo impulz, senzor HC-SR04
  * @author Tomáš Dubina
  * @return nic
  * @param nic
  */
-void USensorTrigger();
+void USensorTrigger(uint8_t select);
 
 /**
  * @author Tomáš Dubina

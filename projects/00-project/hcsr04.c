@@ -14,17 +14,30 @@
 #include "hcsr04.h"
 #include "gpio.h"
 
-void USensorTrigger() {
-  if(distance.complete) {
+void USensorTrigger(uint8_t select) {
+  if(distance.complete && select==0) {
     distance.pulses = 0;
     GPIO_write(&PORTD,USENSOR_TRIG_PIN,LOW);
     _delay_us(1);
     GPIO_write(&PORTD,USENSOR_TRIG_PIN,HIGH);
     _delay_us(10);  // 10 us delay
     GPIO_write(&PORTD,USENSOR_TRIG_PIN,LOW);
+    _delay_us(1);
     distance.enable = TRUE;
     distance.complete = FALSE;
   }
+  if(distance2.complete && select==1) {
+    distance2.pulses = 0;
+    GPIO_write(&PORTD,USENSOR_TRIG_PIN,LOW);
+    _delay_us(1);
+    GPIO_write(&PORTD,USENSOR_TRIG_PIN,HIGH);
+    _delay_us(10);  // 10 us delay
+    GPIO_write(&PORTD,USENSOR_TRIG_PIN,LOW);
+    _delay_us(1);
+    distance2.enable = TRUE;
+    distance2.complete = FALSE;
+  }
+  
 }
 
 uint16_t UPulsesToMilimeters(uint16_t pulses) {
