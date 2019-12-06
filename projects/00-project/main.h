@@ -28,11 +28,11 @@ typedef struct{
 
 /* Define */
 // Ports
-#define IR_LED_PIN           PB1  // Výstupní pin vysílací IR diody
-#define IR_SENSOR_PIN        PB2  // Vstupní pin IR přijímače
-#define USENSOR_ECHO_PIN     PD2  // Vstupní echo pin
-#define USENSOR_TRIG_PIN     PD3  // Výstupní trigger pin
-#define USENSOR_ECHO_PIN_2   PD4  // Vstupní echo pin 2
+#define IR_LED_PIN           PB1  // D9  Výstupní pin vysílací IR diody
+#define IR_SENSOR_PIN        PB2  // D10 Vstupní pin IR přijímače
+#define USENSOR_ECHO_PIN     PD2  // D2  Vstupní echo pin
+#define USENSOR_TRIG_PIN     PD3  // D3  Výstupní trigger pin
+#define USENSOR_ECHO_PIN_2   PD4  // D4  Vstupní echo pin 2
 // Uart
 #define UART_BAUD_RATE       9600
 // Uart colors

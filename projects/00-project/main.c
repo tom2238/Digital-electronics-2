@@ -86,9 +86,9 @@ int main(void) {
     uart_puts("||");*/
     
     USensorTrigger(1);
-    _delay_ms(70);
+    _delay_ms(50);
     USensorTrigger(0);
-    _delay_ms(70);
+    _delay_ms(50);
   }
 
   return 0;
