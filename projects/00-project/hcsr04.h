@@ -11,7 +11,7 @@
 
 #ifndef  HCSR04_H_INCLUDED
 #define  HCSR04_H_INCLUDED
-#define  HCSR04_CALIBRATE 70 // in mm 70
+#define  HCSR04_CALIBRATE_MM 70 // in: 70 mm ~ 200 us ~ 13 pulses
 /**
  * @brief Vyšle trigger pulz a vybere sensor, senzor HC-SR04
  * @author Tomáš Dubina
@@ -29,10 +29,11 @@ void USensorTrigger(uint8_t select);
 uint16_t UPulsesToMilimeters(uint16_t pulses);
 
 /**
+ * @author Milan Horník
  * @brief Vyšle trigger pulz
- * @param nic
+ * @param Pin na který se pulz pošle
  * @return nic
  */
-void USendTrigger();
+void USendTrigger(uint8_t pin_numD);
 
 #endif /*  HCSR04_H_INCLUDED  */

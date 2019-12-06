@@ -17,13 +17,13 @@
 void USensorTrigger(uint8_t select) {
   if(distance.complete && select==0) {
     distance.pulses = 0;
-    USendTrigger();
+    USendTrigger(USENSOR_TRIG_PIN);
     distance.enable = TRUE;
     distance.complete = FALSE;
   }
   if(distance2.complete && select==1) {
     distance2.pulses = 0;
-    USendTrigger();
+    USendTrigger(USENSOR_TRIG_PIN_2);
     distance2.enable = TRUE;
     distance2.complete = FALSE;
   }
@@ -37,14 +37,14 @@ uint16_t UPulsesToMilimeters(uint16_t pulses) {
   if(uDistance < 10) {
     uDistance = 10;
   }
-  return (uint16_t)(uDistance*10-HCSR04_CALIBRATE); // In mm
+  return (uint16_t)(uDistance*10-HCSR04_CALIBRATE_MM); // In mm
 }
 
-void USendTrigger() {
-  GPIO_write(&PORTD,USENSOR_TRIG_PIN,LOW);
+void USendTrigger(uint8_t pin_numD) {
+  GPIO_write(&PORTD,pin_numD,LOW);
   _delay_us(1);
-  GPIO_write(&PORTD,USENSOR_TRIG_PIN,HIGH);
+  GPIO_write(&PORTD,pin_numD,HIGH);
   _delay_us(10);  // 10 us delay
-  GPIO_write(&PORTD,USENSOR_TRIG_PIN,LOW);
+  GPIO_write(&PORTD,pin_numD,LOW);
   _delay_us(1);
 }

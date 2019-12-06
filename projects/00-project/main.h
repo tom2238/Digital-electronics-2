@@ -14,7 +14,7 @@
 
 /* Typedef */
 /**
- * @author Tomáš Dubina
+ * @author Tomáš Dubina, Milan Horník
  * @brief Struktura pro čítač impulzů
  * @param pulses Počet načítaných impulzů
  * @param enable Povolit počítání impulzů
@@ -33,6 +33,7 @@ typedef struct{
 #define USENSOR_ECHO_PIN     PD2  // D2  Vstupní echo pin
 #define USENSOR_TRIG_PIN     PD3  // D3  Výstupní trigger pin
 #define USENSOR_ECHO_PIN_2   PD4  // D4  Vstupní echo pin 2
+#define USENSOR_TRIG_PIN_2   PD5  // D5  Výstupní trigger pin 2
 // Uart
 #define UART_BAUD_RATE       9600
 // Uart colors
@@ -56,9 +57,71 @@ typedef struct{
 #define IR_PULSE_LEN         500/2 // Délka impulzu v us
 #define IR_PULSE_MARK        3  // Délka pauzy jedničky (xLEN)
 #define IR_PULSE_SPACE       1  // Délka pauzy nuly (xLEN)
+#define USENSOR_LEFT         0  // Senzor vlevo, auto 1
+#define USENSOR_RIGHT        1  // Senzor vpravo, auto 2
 
 /* Variables */
 CountPulse distance,distance2;
-CountPulse irdetect; 
+
+/* Function prototypes */
+
+/**
+ * @author Milan Horník
+ * @brief Inicializace vstupních a výstupních pinů
+ * @param Nic
+ * @return Nic
+ */
+void GPIOInit();
+/**
+ * @author Milan Horník
+ * @brief Inicializace UART rozhraní
+ * @param Nic
+ * @return Nic
+ */
+void UARTInit();
+/**
+ * @author Tomáš Dubina
+ * @brief Inicializace čítače/časovače 0
+ * @param Nic
+ * @return Nic
+ */
+void TimerInit();
+/**
+ * @author
+ * @brief NokiaLCDInit
+ * @param nic
+ * @return nic
+ */
+void NokiaLCDInit();
+/**
+ * @author Tomáš Dubina
+ * @brief Nastaví frekvenci a střídu PWM
+ * @param frequency frekvence PWM v Hz
+ * @param percentage střída v %
+ * @return Nic
+ */
+void PWMInit();
+/**
+ * @author Tomáš Dubina
+ * @brief Inicializace PWM na čítači/časovači 1
+ * @param Nic
+ * @return Nic
+ */
+void FrequencyPWM(uint16_t frequency, uint8_t percentage);
+/**
+ * @author Tomáš Dubina
+ * @brief Trvale posílá sekvenci 8 nul a 8 jedniček
+ * @param Nic
+ * @return Nic
+ */
+void SendIR();
+/**
+ * @author
+ * @brief Vytiskne informace o aute na LCD
+ * @param car objekt auta
+ * @param offset Posun pozice na displeji v pixelech, plati pouze pro osu Y
+ * @return nic
+ */
+void PrintCars(CountPulse car, uint8_t offset);
 
 #endif /*  MAIN_RACINGCAR_H_INCLUDED  */
