@@ -21,6 +21,7 @@ SRCS += $(LIBRARY_DIR)/src/uart.c
 #SRCS += $(LIBRARY_DIR)/src/twi.c
 SRCS += $(LIBRARY_DIR)/src/gpio.c
 SRCS += $(LIBRARY_DIR)/src/timer.c
+SRCS += $(LIBRARY_DIR)/src/nokia5110.c
 ASSRC := $(wildcard *.S)
 
 
