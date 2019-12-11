@@ -26,6 +26,22 @@ typedef struct{
   uint8_t complete;
 } CountPulse;
 
+/**
+ * @brief Struktura pro čas auta
+ * @param microseconds
+ * @param seconds
+ * @param minutes
+ * @param totallap
+ * @param enable
+ **/
+typedef struct{
+  uint16_t microsecond;
+  uint8_t seconds;
+  uint8_t minutes;
+  uint16_t totallap;
+  uint8_t enable;
+} CarLap;
+
 /* Define */
 // Ports
 #define IR_LED_PIN           PB1  // D9  Výstupní pin vysílací IR diody
@@ -54,7 +70,7 @@ typedef struct{
 #define PWM_FREQUENCY        38000 // Nosný kmitočet IR záření
 #define PWM_STOP             FrequencyPWM(PWM_FREQUENCY, 0)  // Nevýsílá
 #define PWM_START            FrequencyPWM(PWM_FREQUENCY, 50) // Vysílá nosnou, střída 50%
-#define IR_PULSE_LEN         500/2 // Délka impulzu v us
+#define IR_PULSE_LEN         250/2 // Délka impulzu v us
 #define IR_PULSE_MARK        3  // Délka pauzy jedničky (xLEN)
 #define IR_PULSE_SPACE       1  // Délka pauzy nuly (xLEN)
 #define USENSOR_LEFT         0  // Senzor vlevo, auto 1
@@ -62,49 +78,14 @@ typedef struct{
 
 /* Variables */
 CountPulse distance,distance2;
+CarLap auto1;
 
 /* Function prototypes */
-
-/**
- * @author Milan Horník
- * @brief Inicializace vstupních a výstupních pinů
- * @param Nic
- * @return Nic
- */
-void GPIOInit();
-/**
- * @author Milan Horník
- * @brief Inicializace UART rozhraní
- * @param Nic
- * @return Nic
- */
-void UARTInit();
-/**
- * @author Tomáš Dubina
- * @brief Inicializace čítače/časovače 0
- * @param Nic
- * @return Nic
- */
-void TimerInit();
-/**
- * @author
- * @brief NokiaLCDInit
- * @param nic
- * @return nic
- */
-void NokiaLCDInit();
 /**
  * @author Tomáš Dubina
  * @brief Nastaví frekvenci a střídu PWM
  * @param frequency frekvence PWM v Hz
  * @param percentage střída v %
- * @return Nic
- */
-void PWMInit();
-/**
- * @author Tomáš Dubina
- * @brief Inicializace PWM na čítači/časovači 1
- * @param Nic
  * @return Nic
  */
 void FrequencyPWM(uint16_t frequency, uint8_t percentage);
@@ -123,5 +104,11 @@ void SendIR();
  * @return nic
  */
 void PrintCars(CountPulse car, uint8_t offset);
+/**
+ *
+ */
+CarLap AddCarTime(CarLap carlap);
 
+CarLap ClearCarTime(CarLap carlap);
+// https://www.gadgetronicx.com/lap-timer-slot-car-laser-arduino/
 #endif /*  MAIN_RACINGCAR_H_INCLUDED  */
