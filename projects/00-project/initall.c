@@ -4,6 +4,7 @@
 #include "gpio.h"
 #include "timer.h"
 #include "nokia5110.h"
+#include "uart.h"
 
 void GPIOInit() {
   /* Set output pins */
@@ -61,7 +62,8 @@ void PWMInit() {
 }
 
 void ObjectsInit() {
-  auto1 = ClearCarTime(auto1);
+  auto1 = ClearCar(auto1);
+  auto2 = ClearCar(auto2);
   distance.enable = FALSE;
   distance.complete = TRUE;
   distance.pulses = 0;

@@ -35,11 +35,12 @@ typedef struct{
  * @param enable
  **/
 typedef struct{
-  uint16_t microsecond;
-  uint8_t seconds;
-  uint8_t minutes;
-  uint16_t totallap;
-  uint8_t enable;
+  unsigned long CurrentMillis;
+  unsigned long LastMillis;
+  unsigned long BestMillis;
+  unsigned int CurrentLap;
+  unsigned long millis;
+  unsigned long LastDebounceTime;
 } CarLap;
 
 /* Define */
@@ -75,10 +76,12 @@ typedef struct{
 #define IR_PULSE_SPACE       1  // Délka pauzy nuly (xLEN)
 #define USENSOR_LEFT         0  // Senzor vlevo, auto 1
 #define USENSOR_RIGHT        1  // Senzor vpravo, auto 2
+#define UART_DEBUG              // enable debug via uart
+#define DEBOUNCE_DELAY       50 // ms
 
 /* Variables */
 CountPulse distance,distance2;
-CarLap auto1;
+CarLap auto1,auto2;
 
 /* Function prototypes */
 /**
@@ -103,12 +106,13 @@ void SendIR();
  * @param offset Posun pozice na displeji v pixelech, plati pouze pro osu Y
  * @return nic
  */
-void PrintCars(CountPulse car, uint8_t offset);
+void PrintCars(CarLap car, uint8_t offset);
+
+void uart_putint(int number);
 /**
  *
  */
-CarLap AddCarTime(CarLap carlap);
+CarLap ClearCar(CarLap car);
 
-CarLap ClearCarTime(CarLap carlap);
 // https://www.gadgetronicx.com/lap-timer-slot-car-laser-arduino/
 #endif /*  MAIN_RACINGCAR_H_INCLUDED  */

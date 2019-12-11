@@ -19,15 +19,6 @@
  * @return nic
  */
 void USensorTrigger(uint8_t select);
-
-/**
- * @author Tomáš Dubina
- * @brief Prevede pocet pulzů na délku v mm
- * @param pulses Počet pulzů
- * @return Vzdálenost od cíle v mm
- */
-uint16_t UPulsesToMilimeters(uint16_t pulses);
-
 /**
  * @author Milan Horník
  * @brief Vyšle trigger pulz
@@ -35,5 +26,12 @@ uint16_t UPulsesToMilimeters(uint16_t pulses);
  * @return nic
  */
 void USendTrigger(uint8_t pin_numD);
+
+
+void usound_init(void);				//Paste in Main function
+
+uint32_t UReadDistance(uint8_t select);			//Return the distance in centimeters
+										//Recommended use this function with 20Hz frequency 
+
 
 #endif /*  HCSR04_H_INCLUDED  */

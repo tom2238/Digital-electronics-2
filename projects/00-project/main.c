@@ -23,12 +23,10 @@
 #include "initall.h"
 #include "millis.h"
 
-#define UART_DEBUG            // enable debug via uart
-#define TIMER_COUNT_STEP 4096 // in us
-
 volatile uint8_t EchoPinOld  = 0xFF;
-unsigned long currentRunStartMillis = 0;
-unsigned long lastMillis = 0;
+uint8_t LSensorStateLast = LOW;
+uint8_t LSensorStateRead = LOW;
+uint8_t LSensorStateCurrent = LOW;
 
 /* Functions */
 
@@ -38,21 +36,54 @@ unsigned long lastMillis = 0;
  * @param  Nic
  * @return Návratový kod
  */
-int main(void) {
+int main(void) { 
+  UARTInit();
   GPIOInit();
-  #ifdef UART_DEBUG
-    UARTInit();
-  #endif
   NokiaLCDInit();
   ObjectsInit();
   TimerInit();
   PWMInit();
-  _delay_ms(500);
-  //uart_puts("Autodraha pripravena\n");
-
+  _delay_ms(200);
+  uart_puts("Autodraha pripravena\n");
+  _delay_ms(200);
   /* Infinite loop */
   for (;;) {
-    if(GPIO_read(&PINB,IR_SENSOR_PIN)) {
+    LSensorStateRead = GPIO_read(&PINB,IR_SENSOR_PIN);
+    if (LSensorStateRead != LSensorStateLast) {
+      auto1.LastDebounceTime = millis();
+    } 
+
+    if ((millis() - auto1.LastDebounceTime) > DEBOUNCE_DELAY) {
+       if (LSensorStateRead != LSensorStateCurrent) {
+         LSensorStateCurrent = LSensorStateRead;
+
+         if (LSensorStateCurrent == LOW) {
+           auto1.millis = millis();
+           if (auto1.CurrentLap > 0) {
+             auto1.LastMillis = auto1.millis - auto1.CurrentMillis; // uloz aktualni kolo
+             if (auto1.LastMillis < auto1.BestMillis || auto1.BestMillis == 0) {
+               auto1.BestMillis = auto1.LastMillis; // ulozit nejlepsi
+             }
+           } 
+           auto1.CurrentMillis = auto1.millis; // reset aktualnich
+           auto1.CurrentLap++;
+         }
+       }
+    }
+    // Ulozit aktualni stav
+    LSensorStateLast = LSensorStateRead;
+    auto1.millis = millis();
+
+    // neni prvni kolo
+    if (auto1.CurrentLap > 0) {
+      uart_putint(auto1.millis - auto1.CurrentMillis);
+      uart_puts("\n");
+    } else {
+      uart_putint(auto1.millis - auto1.CurrentMillis);
+      uart_puts("\n");
+    }
+
+    /*if(GPIO_read(&PINB,IR_SENSOR_PIN)) {
       ANSI_UART_C_RED; // Prochazi
       uart_puts("X");
       ANSI_UART_C_NORMAL;
@@ -61,8 +92,8 @@ int main(void) {
       ANSI_UART_C_GREEN; // Prerusen
       uart_puts("X");
       ANSI_UART_C_NORMAL;
-    }
-    currentRunStartMillis = millis();
+    }*/
+
     //SendIR();
 
     /*if(GPIO_read(&PINB,IR_SENSOR_PIN) && cartimer == 0) {
@@ -75,20 +106,12 @@ int main(void) {
       uart_puts(time);
       uart_puts(" s\n");
     }
-    else {
-      auto1 = ClearCarTime(auto1);
-      auto1.enable = FALSE;
-    }*/
+   */
     /*USensorTrigger(USENSOR_LEFT);
     _delay_ms(50);
     USensorTrigger(USENSOR_RIGHT);
     */
-    _delay_ms(100);
-    lastMillis = millis() - currentRunStartMillis;
-    char time[8];
-    itoa(lastMillis, time , 10);
-    uart_puts(time);
-    //uart_puts(" ms \n");
+    //_delay_ms(100);
 
   }
   return 0;
@@ -101,39 +124,7 @@ int main(void) {
  * @return Nic
  */
 ISR(PCINT2_vect) {
-  uint8_t EchoChanged;
-  EchoChanged = PIND ^ EchoPinOld;
-  EchoPinOld = PIND;
-  if(distance.enable) {  
-    if(EchoChanged & (1 << USENSOR_ECHO_PIN))  {
-      #ifdef UART_DEBUG
-      uart_puts("Zmena1|");
-      #endif
-      if(distance.pulses > 30) {
-         distance.enable = FALSE;
-         /*if(distance.pulses > 700) {
-            distance.pulses = 700;
-         }*/
-         PrintCars(distance, 0);
-         distance.complete = TRUE;
-      }
-    }
-  }
-  if(distance2.enable) {
-    if(EchoChanged & (1 << USENSOR_ECHO_PIN_2))  {
-      #ifdef UART_DEBUG
-      uart_puts("Zmena2|");
-      #endif
-      if(distance2.pulses > 30) {
-         distance2.enable = FALSE;
-         /*if(distance2.pulses > 700) {
-            distance2.pulses = 700;
-         }*/
-         PrintCars(distance2, 24);
-         distance2.complete = TRUE;
-      }    
-    } 
-  }
+  
 }
 
 void FrequencyPWM(uint16_t frequency, uint8_t percentage) {
@@ -166,18 +157,14 @@ void SendIR() {
   }
 }
 
-void PrintCars(CountPulse car, uint8_t offset) {
+void PrintCars(CarLap car, uint8_t offset) {
   char dist[8];
-  uint16_t milimeters = UPulsesToMilimeters(car.pulses);
-  itoa(milimeters, dist , 10);
-  #ifdef UART_DEBUG
-    uart_puts(dist);
-    uart_puts(" mm \n");
-  #endif
+  uint16_t cm = UReadDistance(USENSOR_LEFT);
+  car.CurrentLap = car.CurrentLap;
   nokia_lcd_set_cursor(0,0+offset);
   nokia_lcd_write_string(dist,1);
-  nokia_lcd_write_string(" mm       ",1);    
-  if ((milimeters>20)&&(milimeters<75)) {
+  nokia_lcd_write_string(" cm       ",1);    
+  if ((cm>2)&&(cm<8)) {
     nokia_lcd_set_cursor(0,8+offset);
     nokia_lcd_write_string(">Obsazeno  ",1);
   }
@@ -188,22 +175,19 @@ void PrintCars(CountPulse car, uint8_t offset) {
   nokia_lcd_render();
 }
 
-CarLap AddCarTime(CarLap carlap) {
-  CarLap car = carlap;
-  uint16_t secs = 0;
-  car.microsecond += TIMER_COUNT_STEP;
-  if(car.microsecond > 1000) {
-    secs = car.microsecond / 1000;
-    car.seconds += secs;
-    car.microsecond = car.microsecond - secs*1000;
-  }
-  return car;
+void uart_putint(int number) {
+  char numstring[8];
+  itoa(number, numstring , 10);
+  uart_puts(numstring);
 }
 
-CarLap ClearCarTime(CarLap carlap) {
-  CarLap car = carlap;
-  car.microsecond = 0;
-  car.seconds = 0;
-  car.minutes = 0;
-  return car;
+CarLap ClearCar(CarLap car) {
+  CarLap CarRet = car;
+  CarRet.CurrentMillis = 0;
+  CarRet.LastMillis = 0;
+  CarRet.BestMillis = 0;
+  CarRet.CurrentLap = 0;
+  CarRet.millis = 0;
+  CarRet.LastDebounceTime = 0;
+  return CarRet;
 }
