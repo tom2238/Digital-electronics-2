@@ -40,7 +40,7 @@ void TimerInit() {
 void NokiaLCDInit() {
   nokia_lcd_init();
   nokia_lcd_clear();
-  nokia_lcd_write_string("[*>#] Test LCD!!!",1);
+  nokia_lcd_write_string("[*>#]Test{i8$}",1);
   nokia_lcd_set_cursor(0, 10);
   nokia_lcd_render();
 }

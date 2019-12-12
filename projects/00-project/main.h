@@ -13,7 +13,15 @@
 #define  MAIN_RACINGCAR_H_INCLUDED
 
 /* Typedef */
-
+/**
+ *
+ *
+**/ 
+typedef struct{
+  unsigned int millis;
+  unsigned int seconds;
+  unsigned int minutes;
+} Clock;
 /**
  * @brief Struktura pro mereni casu auta
  * @param CurrentMillis Cas aktualniho kola
@@ -32,6 +40,8 @@ typedef struct{
   unsigned long millis;
   unsigned long LastDebounceTime;
   uint16_t Distance;
+  Clock CCurrent;
+  Clock CBest;
 } CarLap;
 
 /* Define */
@@ -68,7 +78,7 @@ typedef struct{
 #define USENSOR_LEFT         0  // Senzor vlevo, auto 1
 #define USENSOR_RIGHT        1  // Senzor vpravo, auto 2
 #define UART_DEBUG              // enable debug via uart
-#define DEBOUNCE_DELAY       50 // ms
+#define DEBOUNCE_DELAY       40 // ms
 
 /* Variables */
 CarLap auto1,auto2;
@@ -103,7 +113,11 @@ void PrintCars(CarLap car, uint8_t offset);
  * @param number Cislo ktere se ma zobrazit
  * @return nic
  */
-void uart_putint(int number);
+void uart_putint(long number);
+/**
+ *
+ */
+void uart_putuint(unsigned long number);
 /**
  * @author Tomáš Dubina
  * @brief Smaze informace a casech a kolech auticka
@@ -111,6 +125,16 @@ void uart_putint(int number);
  * @return Vynulovane hodnoty auta
  */
 CarLap ClearCar(CarLap car);
+/**
+ *
+ *
+ */ 
+Clock MillisToClock(unsigned long value);
+
+
+CarLap CalculateCar(CarLap car);
+
+
 
 // https://www.gadgetronicx.com/lap-timer-slot-car-laser-arduino/
 #endif /*  MAIN_RACINGCAR_H_INCLUDED  */
