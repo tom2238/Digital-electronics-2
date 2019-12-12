@@ -9,7 +9,7 @@
  * Main source file
  */
 
-/* Includes ----------------------------------------------------------*/
+/* Includes */
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -23,9 +23,17 @@
 #include "initall.h"
 #include "millis.h"
 
-volatile uint8_t EchoPinOld  = 0xFF;
+/**
+ * @brief Posledni stav senzoru
+ */
 uint8_t LSensorStateLast = LOW;
+/**
+ * @brief Aktualni prectena hodnota senzoru
+ */
 uint8_t LSensorStateRead = LOW;
+/**
+ * @brief Aktualni ulozena hodnota senzoru
+ */
 uint8_t LSensorStateCurrent = LOW;
 
 /* Functions */
@@ -51,6 +59,8 @@ int main(void) {
     LSensorStateRead = GPIO_read(&PINB,IR_SENSOR_PIN);
     if (LSensorStateRead != LSensorStateLast) {
       auto1.LastDebounceTime = millis();
+      auto1.Distance = UReadDistance(USENSOR_LEFT);
+      //auto2.Distance = UReadDistance(USENSOR_RIGHT);
     } 
 
     if ((millis() - auto1.LastDebounceTime) > DEBOUNCE_DELAY) {
@@ -77,10 +87,14 @@ int main(void) {
     // neni prvni kolo
     if (auto1.CurrentLap > 0) {
       uart_putint(auto1.millis - auto1.CurrentMillis);
-      uart_puts("\n");
+      uart_puts("millis || ");
+      uart_putint(auto1.Distance);
+      uart_puts("mm \n");
     } else {
       uart_putint(auto1.millis - auto1.CurrentMillis);
-      uart_puts("\n");
+      uart_puts("millis || ");
+      uart_putint(auto1.Distance);
+      uart_puts("mm \n");
     }
 
     /*if(GPIO_read(&PINB,IR_SENSOR_PIN)) {
@@ -95,36 +109,10 @@ int main(void) {
     }*/
 
     //SendIR();
-
-    /*if(GPIO_read(&PINB,IR_SENSOR_PIN) && cartimer == 0) {
-      auto1.enable = TRUE;
-      char time[8];
-      itoa(auto1.seconds, time , 10);
-      uart_puts(time);
-      uart_puts(":");
-      itoa(auto1.microsecond, time, 10);
-      uart_puts(time);
-      uart_puts(" s\n");
-    }
-   */
-    /*USensorTrigger(USENSOR_LEFT);
-    _delay_ms(50);
-    USensorTrigger(USENSOR_RIGHT);
-    */
     //_delay_ms(100);
 
   }
   return 0;
-}
-
-/**
- * @author Tomáš Dubina
- * @brief Přerušení pokud dojde ke změně hodnoty na echo pinu PD2
- * @param Nic
- * @return Nic
- */
-ISR(PCINT2_vect) {
-  
 }
 
 void FrequencyPWM(uint16_t frequency, uint8_t percentage) {
@@ -189,5 +177,6 @@ CarLap ClearCar(CarLap car) {
   CarRet.CurrentLap = 0;
   CarRet.millis = 0;
   CarRet.LastDebounceTime = 0;
+  CarRet.Distance = 0;
   return CarRet;
 }

@@ -14,8 +14,8 @@ void GPIOInit() {
 
   /* Set input pins */
   GPIO_config_input_nopull(&DDRB,&PORTB,IR_SENSOR_PIN);
-  GPIO_config_input_pullup(&DDRD,&PORTD,USENSOR_ECHO_PIN);
-  GPIO_config_input_pullup(&DDRD,&PORTD,USENSOR_ECHO_PIN_2);
+  GPIO_config_input_nopull(&DDRD,&PORTD,USENSOR_ECHO_PIN);
+  GPIO_config_input_nopull(&DDRD,&PORTD,USENSOR_ECHO_PIN_2);
 
   /* Turn outputs off */
   GPIO_write(&PORTB,IR_LED_PIN,LOW);
@@ -31,13 +31,9 @@ void UARTInit() {
 }
 
 void TimerInit() {
-  // Timer 0
-  TIM_config_prescaler(TIM0, TIM_PRESC_64); // Millis() functions
+  // Timer 0 nutne pro funkci millis();
+  TIM_config_prescaler(TIM0, TIM_PRESC_64); // Millis() function
   TIM_config_interrupt(TIM0, TIM_OVERFLOW_ENABLE);
-  // Pin change interrups HC-SR04 echo pin
-  PCICR |= _BV(PCIE2);
-  PCMSK2 |= _BV(PCINT18); // echo 1
-  PCMSK2 |= _BV(PCINT20); // echo 2
   sei(); //Enable global interrupts
 }
 
@@ -64,10 +60,4 @@ void PWMInit() {
 void ObjectsInit() {
   auto1 = ClearCar(auto1);
   auto2 = ClearCar(auto2);
-  distance.enable = FALSE;
-  distance.complete = TRUE;
-  distance.pulses = 0;
-  distance2.enable = FALSE;
-  distance2.complete = TRUE;
-  distance2.pulses = 0;
 }

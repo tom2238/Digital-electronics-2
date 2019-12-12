@@ -7,5 +7,3 @@ hcsr04.c
 main.h
 initall.h
 initall.c
-millis.h
-millis.c

@@ -11,14 +11,7 @@
 
 #ifndef  HCSR04_H_INCLUDED
 #define  HCSR04_H_INCLUDED
-#define  HCSR04_CALIBRATE_MM 70 // in: 70 mm ~ 200 us ~ 13 pulses
-/**
- * @brief Vyšle trigger pulz a vybere sensor, senzor HC-SR04
- * @author Tomáš Dubina
- * @param Vyber senzoru (0 nebo 1)
- * @return nic
- */
-void USensorTrigger(uint8_t select);
+
 /**
  * @author Milan Horník
  * @brief Vyšle trigger pulz
@@ -26,12 +19,14 @@ void USensorTrigger(uint8_t select);
  * @return nic
  */
 void USendTrigger(uint8_t pin_numD);
+/**
+ * @author Kornuta Taras (http://digiua.com), Tomas Dubina
+ * @brief Vrati vzdalenost od objektu
+ * @param select Cilso senzoru kde se bude cist
+ * @return Zmerena vzdalenost v milimetrech
+ */
+uint32_t UReadDistance(uint8_t select);
 
-
-void usound_init(void);				//Paste in Main function
-
-uint32_t UReadDistance(uint8_t select);			//Return the distance in centimeters
-										//Recommended use this function with 20Hz frequency 
-
-
+//unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
+unsigned long pulseIn(uint8_t pin, uint8_t state);
 #endif /*  HCSR04_H_INCLUDED  */

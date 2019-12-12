@@ -13,26 +13,16 @@
 #define  MAIN_RACINGCAR_H_INCLUDED
 
 /* Typedef */
-/**
- * @author Tomáš Dubina, Milan Horník
- * @brief Struktura pro čítač impulzů
- * @param pulses Počet načítaných impulzů
- * @param enable Povolit počítání impulzů
- * @param complete Počítání impulzů dokončeno
- */
-typedef struct{
-  unsigned int pulses;
-  uint8_t enable;
-  uint8_t complete;
-} CountPulse;
 
 /**
- * @brief Struktura pro čas auta
- * @param microseconds
- * @param seconds
- * @param minutes
- * @param totallap
- * @param enable
+ * @brief Struktura pro mereni casu auta
+ * @param CurrentMillis Cas aktualniho kola
+ * @param LastMillis Cas posledniho kola
+ * @param BestMillis Nejlepsi cas kola
+ * @param CurrentLap Aktualni pocet najetych kol
+ * @param millis Pomocna promena casu
+ * @param LastDebounceTime Pauza po projeti
+ * @param Distance Namerena vzdalenost senzorem
  **/
 typedef struct{
   unsigned long CurrentMillis;
@@ -41,6 +31,7 @@ typedef struct{
   unsigned int CurrentLap;
   unsigned long millis;
   unsigned long LastDebounceTime;
+  uint16_t Distance;
 } CarLap;
 
 /* Define */
@@ -80,7 +71,6 @@ typedef struct{
 #define DEBOUNCE_DELAY       50 // ms
 
 /* Variables */
-CountPulse distance,distance2;
 CarLap auto1,auto2;
 
 /* Function prototypes */
@@ -107,10 +97,18 @@ void SendIR();
  * @return nic
  */
 void PrintCars(CarLap car, uint8_t offset);
-
+/**
+ * @author Milan Horník
+ * @brief Vypise cele cislo na UART
+ * @param number Cislo ktere se ma zobrazit
+ * @return nic
+ */
 void uart_putint(int number);
 /**
- *
+ * @author Tomáš Dubina
+ * @brief Smaze informace a casech a kolech auticka
+ * @param car Auto ktere se ma vynulovat
+ * @return Vynulovane hodnoty auta
  */
 CarLap ClearCar(CarLap car);
 
