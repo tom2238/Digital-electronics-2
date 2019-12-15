@@ -53,3 +53,5 @@ dkms.conf
 
 # Doxygen html
 html/
+# Doxygen latex
+latex/

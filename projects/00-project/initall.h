@@ -25,15 +25,15 @@ void TimerInit();
 /**
  * @author Milan Hornik
  * @brief Inicializace Nokia LCD displeje
- * @param nic
- * @return nic
+ * @param Nic
+ * @return Nic
  */
 void NokiaLCDInit();
 /**
  * @author Milan Hornik
  * @brief Inicializace objektu na vychozi hodnoty
- * @param nic
- * @return nic
+ * @param Nic
+ * @return Nic
  */
 void ObjectsInit();
 

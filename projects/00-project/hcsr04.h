@@ -15,14 +15,14 @@
 /**
  * @author Milan Horník
  * @brief Vyšle trigger pulz
- * @param Pin na který se pulz pošle
+ * @param pin_numD Pin na který se pulz pošle
  * @return nic
  */
 void USendTrigger(uint8_t pin_numD);
 /**
  * @author Milan Hornik, Tomas Dubina
  * @brief Vrati vzdalenost od objektu
- * @param select Cilso senzoru kde se bude cist
+ * @param select Cislo senzoru kde se bude cist
  * @return Zmerena vzdalenost v milimetrech
  */
 uint32_t UReadDistance(uint8_t select);

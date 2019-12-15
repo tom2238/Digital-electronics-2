@@ -33,7 +33,7 @@ typedef struct{
  * @param millis Pomocna promena casu
  * @param LastDebounceTime Pauza po projeti
  * @param Distance Namerena vzdalenost senzorem
- * @param CCurrent Aktualni cas kol ve formatu SS:MS
+ * @param CCurrent Aktualni cas kolo ve formatu SS:MS
  * @param CBest Nejlepsi cas kola ve formatu SS:MS
  **/
 typedef struct{
@@ -86,21 +86,21 @@ CarLap auto1,auto2;
  * @brief Vytiskne informace o aute na LCD
  * @param car Objekt auta ktery se zobrazi
  * @param offset Posun pozice na displeji v pixelech, plati pouze pro osu Y
- * @return nic
+ * @return Nic
  */
 void PrintCars(CarLap car, uint8_t offset);
 /**
  * @author Milan Horník
  * @brief Vypise cele cislo na UART
  * @param number Cislo ktere se ma zobrazit
- * @return nic
+ * @return Nic
  */
 void uart_putint(long number);
 /**
  * @author Milan Horník
  * @brief Vypise cele nezaporne cislo na UART
  * @param number Cislo ktere se ma zobrazit
- * @return nic
+ * @return Nic
  */
 void uart_putuint(unsigned long number);
 /**
@@ -119,7 +119,7 @@ CarLap ClearCar(CarLap car);
 Clock MillisToClock(unsigned long value);
 /**
  * @author Tomas Dubina, Milan Hornik
- * @brief CalculateCar
+ * @brief Vypocita cas kola, cas nejlepsiho kola a pocet ujetych kol
  * @param car Auto ke kteremu se pripocte cas a kola
  * @return Objekt auta s novymi casy
  */
