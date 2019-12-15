@@ -25,29 +25,29 @@ void USendTrigger(uint8_t pin_numD) {
 }
 
 uint32_t UReadDistance(uint8_t select) {
-  uint32_t disTime=0;
-  uint8_t readStatus=0;
+  uint32_t DistanceTime=0;
+  uint8_t ReadStatus=0;
 
   if(select == USENSOR_LEFT) {
     USendTrigger(USENSOR_TRIG_PIN);
-    while(readStatus == 0) {
+    while(ReadStatus == 0) {
       while(GPIO_read(&PIND,USENSOR_ECHO_PIN)) {
-        disTime++;
-        readStatus = 1;
+        DistanceTime++;
+        ReadStatus = 1;
       }
     }
   }
   else if (select == USENSOR_RIGHT) {
     USendTrigger(USENSOR_TRIG_PIN_2);
-    while(readStatus == 0) {
+    while(ReadStatus == 0) {
       while(GPIO_read(&PIND,USENSOR_ECHO_PIN_2)) {
-        disTime++;
-        readStatus = 1;
+        DistanceTime++;
+        ReadStatus = 1;
       }
     }
   }
-  if(disTime < 60) {
-    disTime = 60;
+  if(DistanceTime < 60) { // pokud vyjde mene nez 22 mm
+    DistanceTime = 60;
   }
-  return (disTime * 0.04239582 - 0.311903)*10;// *  0.00862;	//return data in mm
+  return (DistanceTime * 0.04239582 - 0.311903)*10; // vzdalenost v mm, cisla urcena merenim
 }

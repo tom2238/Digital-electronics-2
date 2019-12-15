@@ -18,7 +18,7 @@ void GPIOInit() {
   GPIO_config_input_nopull(&DDRD,&PORTD,USENSOR_ECHO_PIN_2);
 
   /* Turn outputs off */
-  GPIO_write(&PORTB,IR_LED_PIN,LOW);
+  GPIO_write(&PORTB,IR_LED_PIN,HIGH);
   GPIO_write(&PORTD,USENSOR_TRIG_PIN,LOW);
   GPIO_write(&PORTD,USENSOR_TRIG_PIN_2,LOW);
 }
@@ -43,18 +43,6 @@ void NokiaLCDInit() {
   nokia_lcd_write_string("[*>#]Test{i8$}",1);
   nokia_lcd_set_cursor(0, 10);
   nokia_lcd_render();
-}
-
-void PWMInit() {
-  DDRB |= (1 << PINB1);
-  // Timer/Counter 1 initialization
-  // Clock source: System Clock
-  // Mode: Fast PWM
-  // Input Capture on Falling Edge
-  TCCR1A=(1<<COM1A1) | (0<<COM1A0) | (1<<COM1B1) | (0<<COM1B0) | (1<<WGM11) | (0<<WGM10);
-  TCCR1B=(0<<ICNC1) | (0<<ICES1) | (1<<WGM13) | (1<<WGM12) | (0<<CS12) | (0<<CS11) | (1<<CS10);
-  TCNT1H=0x00;
-  TCNT1L=0x00;
 }
 
 void ObjectsInit() {

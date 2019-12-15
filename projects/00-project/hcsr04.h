@@ -20,13 +20,11 @@
  */
 void USendTrigger(uint8_t pin_numD);
 /**
- * @author Kornuta Taras (http://digiua.com), Tomas Dubina
+ * @author Milan Hornik, Tomas Dubina
  * @brief Vrati vzdalenost od objektu
  * @param select Cilso senzoru kde se bude cist
  * @return Zmerena vzdalenost v milimetrech
  */
 uint32_t UReadDistance(uint8_t select);
 
-//unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
-unsigned long pulseIn(uint8_t pin, uint8_t state);
 #endif /*  HCSR04_H_INCLUDED  */

@@ -47,9 +47,10 @@ int main(void) {
   NokiaLCDInit();
   ObjectsInit();
   TimerInit();
-  PWMInit();
   _delay_ms(200);
-  uart_puts("Autodraha pripravena\n");
+  #ifdef UART_DEBUG
+    uart_puts("Autodraha pripravena\n");
+  #endif
   _delay_ms(200);
   /* Infinite loop */
   for (;;) {
@@ -58,26 +59,6 @@ int main(void) {
       auto1.LastDebounceTime = millis(); 
       //auto2.LastDebounceTime = millis();
     } 
-    /*
-    if ((millis() - auto1.LastDebounceTime) > DEBOUNCE_DELAY) {
-       if (LSensorStateRead != LSensorStateCurrent) {
-         LSensorStateCurrent = LSensorStateRead;
-         auto1.Distance = UReadDistance(USENSOR_LEFT);
-         // _delay_ms(1);
-         // auto2.Distance = UReadDistance(USENSOR_RIGHT);
-
-         if (LSensorStateCurrent == LOW) {
-           //_delay_ms(1);
-           
-           if(auto1.Distance < 100) {
-             auto1 = CalculateCar(auto1);
-           }
-           //if(auto2.Distance < 120) {
-           //  auto2 = CalculateCar(auto2);
-           //}
-         }
-       }
-    }*/
     if ((millis() - auto1.LastDebounceTime) > DEBOUNCE_DELAY) {
        if (LSensorStateRead != LSensorStateCurrent) {
          LSensorStateCurrent = LSensorStateRead;
@@ -86,12 +67,12 @@ int main(void) {
          if (LSensorStateCurrent == LOW) {
            //_delay_ms(1);
            for(i=0;i<2;i++) {
-           auto1.Distance += UReadDistance(USENSOR_LEFT);
-           //_delay_us(5);
+             auto1.Distance += UReadDistance(USENSOR_LEFT);
+             //_delay_us(5);
            }
            for(i=0;i<2;i++) {
-           auto2.Distance += UReadDistance(USENSOR_RIGHT);
-           //_delay_us(5);
+             auto2.Distance += UReadDistance(USENSOR_RIGHT);
+             //_delay_us(5);
            }
            auto1.Distance = auto1.Distance / 2;
            auto2.Distance = auto2.Distance / 2;
@@ -112,6 +93,7 @@ int main(void) {
     // neni prvni kolo
     if (auto1.CurrentLap > 0) {
       PrintCars(auto1, 24);
+      #ifdef UART_DEBUG
       /*uart_puts("A1 Cas ");
       uart_putuint(auto1.millis - auto1.CurrentMillis);
       uart_puts(" ms || Nej ");
@@ -121,13 +103,16 @@ int main(void) {
       uart_puts(" || Vzd ");
       uart_putuint(auto1.Distance);
       uart_puts("mm ||");*/
+      #endif
     } else {
       nokia_lcd_set_cursor(0,0);
       nokia_lcd_write_string("Cekam ...     ",1);
       nokia_lcd_render();
     }
+    // neni prvni kolo
     if (auto2.CurrentLap > 0) {
       PrintCars(auto2, 0);
+      #ifdef UART_DEBUG
       /*uart_puts("A2 Cas ");
       uart_putuint(auto2.millis - auto2.CurrentMillis);
       uart_puts(" ms || Nej ");
@@ -137,46 +122,14 @@ int main(void) {
       uart_puts(" || Vzd ");
       uart_putuint(auto2.Distance);
       uart_puts("mm \n");*/
+      #endif
     } else {
       nokia_lcd_set_cursor(0,24);
       nokia_lcd_write_string("Cekam ...     ",1);
       nokia_lcd_render();
     }
-
-    //_delay_ms(100);
-
   }
   return 0;
-}
-
-void FrequencyPWM(uint16_t frequency, uint8_t percentage) {
-	uint16_t TOP = F_CPU/(PWM_DIVIDER*frequency) - 1;
-	ICR1H = TOP >> 8;
-	ICR1L = TOP & 0xFF;
-    if(percentage > 100) {
-      percentage = 100;
-    }
-    uint16_t OCR = (uint16_t)(((uint32_t)percentage * (uint32_t)TOP)/100);
-	OCR1AH = OCR >> 8;
-	OCR1AL = OCR & 0xFF;
-}
-
-void SendIR() {
-  //Send 1
-  uint8_t i;
-  for(i=0;i<8;i++) {
-    PWM_START;
-    _delay_us(IR_PULSE_LEN);
-    PWM_STOP;
-    _delay_us(IR_PULSE_LEN*IR_PULSE_MARK);
-  }
-  //Send 0
-  for(i=0;i<8;i++) {
-    PWM_START;
-    _delay_us(IR_PULSE_LEN);
-    PWM_STOP;
-    _delay_us(IR_PULSE_LEN*IR_PULSE_SPACE);
-  }
 }
 
 void PrintCars(CarLap car, uint8_t offset) {

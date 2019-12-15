@@ -14,8 +14,10 @@
 
 /* Typedef */
 /**
- *
- *
+ * @brief Struktura pro ulozeni casu ve formate SS:MS (minuty se nepouzivaji)
+ * @param millis Cast pro ulozeni milisekund
+ * @param seconds Cast pro ulozeni sekund
+ * @param minutes Cast pro ulozeni minut
 **/ 
 typedef struct{
   unsigned int millis;
@@ -31,6 +33,8 @@ typedef struct{
  * @param millis Pomocna promena casu
  * @param LastDebounceTime Pauza po projeti
  * @param Distance Namerena vzdalenost senzorem
+ * @param CCurrent Aktualni cas kol ve formatu SS:MS
+ * @param CBest Nejlepsi cas kola ve formatu SS:MS
  **/
 typedef struct{
   unsigned long CurrentMillis;
@@ -68,41 +72,19 @@ typedef struct{
 #define LOW                  0 // Nízká
 #define TRUE                 1 // Pravda
 #define FALSE                0 // Nepravda
-#define PWM_DIVIDER          1 // Delička PWM časovače
-#define PWM_FREQUENCY        38000 // Nosný kmitočet IR záření
-#define PWM_STOP             FrequencyPWM(PWM_FREQUENCY, 0)  // Nevýsílá
-#define PWM_START            FrequencyPWM(PWM_FREQUENCY, 50) // Vysílá nosnou, střída 50%
-#define IR_PULSE_LEN         250/2 // Délka impulzu v us
-#define IR_PULSE_MARK        3  // Délka pauzy jedničky (xLEN)
-#define IR_PULSE_SPACE       1  // Délka pauzy nuly (xLEN)
-#define USENSOR_LEFT         0  // Senzor vlevo, auto 1
-#define USENSOR_RIGHT        1  // Senzor vpravo, auto 2
-#define UART_DEBUG              // enable debug via uart
-#define DEBOUNCE_DELAY       40 // ms
+#define USENSOR_LEFT         0 // Senzor vlevo, auto 1
+#define USENSOR_RIGHT        1 // Senzor vpravo, auto 2
+#define UART_DEBUG             // enable debug via uart
+#define DEBOUNCE_DELAY       40// cas cekani v ms
 
 /* Variables */
 CarLap auto1,auto2;
 
 /* Function prototypes */
 /**
- * @author Tomáš Dubina
- * @brief Nastaví frekvenci a střídu PWM
- * @param frequency frekvence PWM v Hz
- * @param percentage střída v %
- * @return Nic
- */
-void FrequencyPWM(uint16_t frequency, uint8_t percentage);
-/**
- * @author Tomáš Dubina
- * @brief Trvale posílá sekvenci 8 nul a 8 jedniček
- * @param Nic
- * @return Nic
- */
-void SendIR();
-/**
- * @author
+ * @author Milan Hornik, Tomas Dubina
  * @brief Vytiskne informace o aute na LCD
- * @param car objekt auta
+ * @param car Objekt auta ktery se zobrazi
  * @param offset Posun pozice na displeji v pixelech, plati pouze pro osu Y
  * @return nic
  */
@@ -115,26 +97,32 @@ void PrintCars(CarLap car, uint8_t offset);
  */
 void uart_putint(long number);
 /**
- *
+ * @author Milan Horník
+ * @brief Vypise cele nezaporne cislo na UART
+ * @param number Cislo ktere se ma zobrazit
+ * @return nic
  */
 void uart_putuint(unsigned long number);
 /**
  * @author Tomáš Dubina
  * @brief Smaze informace a casech a kolech auticka
  * @param car Auto ktere se ma vynulovat
- * @return Vynulovane hodnoty auta
+ * @return Objekt auta s vynulovanymi hodnotami
  */
 CarLap ClearCar(CarLap car);
 /**
- *
- *
+ * @author Tomas Dubina
+ * @brief Prepocte milisekundy na sekundy a milisekundy
+ * @param value Hodnota v milisekundach ktera se prevede
+ * @return Objekt hodin s prevedenymi hodnotami
  */ 
 Clock MillisToClock(unsigned long value);
-
-
+/**
+ * @author Tomas Dubina, Milan Hornik
+ * @brief CalculateCar
+ * @param car Auto ke kteremu se pripocte cas a kola
+ * @return Objekt auta s novymi casy
+ */
 CarLap CalculateCar(CarLap car);
 
-
-
-// https://www.gadgetronicx.com/lap-timer-slot-car-laser-arduino/
 #endif /*  MAIN_RACINGCAR_H_INCLUDED  */
