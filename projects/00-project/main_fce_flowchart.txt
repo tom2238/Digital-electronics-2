@@ -1,0 +1,48 @@
+while (Hlavní smyčka) {
+    Přečti informace ze senzoru;
+    
+    if (Přečtená hodnota ze senzoru se lišší od poslední) {
+      Ulož čekací čas;
+     
+   
+    } 
+    if (Uběhl čekací čas) {
+       if (Přečtená hodnota ze senzoru se lišší od uložené) {
+         Přepiš uloženou hodnotu senzoru na přečtenou;
+
+         if (Uložený stav senzoru má nízkou hodnotu) {
+          
+           
+           Zjisti vzdálenost auta 1 a 2;
+           if(Vzdálenost auta 1 je v rozsahu) {
+             Výpočet časů auta 1;
+           }
+           if(Vzdálenost auta 2 je v rozsahu) {
+             Výpočet časů auta 2;
+           }
+         }
+       }
+    }
+  
+    Přepiš poslední stav senzoru na aktuální;
+    Ulož pomocné časy auta 1 a 2;
+
+    
+    if (Auto 1 > 0 kol) {
+      Zobraz informace o autě 1;
+      
+    } else {
+     
+      Čekej na průjezd;
+    
+    }
+   
+    if (Auto 2 > 0 kol) {
+      Zobraz informace o autě 2;
+      
+    } else {
+      Čekej na průjezd;
+    
+    }
+  }
+
