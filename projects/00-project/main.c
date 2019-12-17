@@ -92,7 +92,7 @@ int main(void) {
 
     // neni prvni kolo
     if (auto1.CurrentLap > 0) {
-      PrintCars(auto1, 24);
+      PrintCars(auto1, 0);
       #ifdef UART_DEBUG
       /*uart_puts("A1 Cas ");
       uart_putuint(auto1.millis - auto1.CurrentMillis);
@@ -111,7 +111,7 @@ int main(void) {
     }
     // neni prvni kolo
     if (auto2.CurrentLap > 0) {
-      PrintCars(auto2, 0);
+      PrintCars(auto2, 24);
       #ifdef UART_DEBUG
       /*uart_puts("A2 Cas ");
       uart_putuint(auto2.millis - auto2.CurrentMillis);
