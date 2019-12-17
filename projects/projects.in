@@ -39,7 +39,7 @@ RMFILES = *.o *.hex *.map *.elf *.lss
 
 # Extra flags to give to the C compiler
 # https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
-CFLAGS  = -std=c99 -Wall -Wextra -Werror -g -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)UL -I. -I$(LIBRARY_DIR)/inc
+CFLAGS  = -std=c99 -Wall -Wextra -Werror -g -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)UL -I. -I$(LIBRARY_DIR)/inc -fdump-rtl-expand
 # Extra flags to give to the assembler
 ASFLAGS  = -mmcu=$(MCU) -Wall -I$(LIBRARY_DIR)/inc
 # Extra flags to give to compilers when they are supposed to invoke the linker
